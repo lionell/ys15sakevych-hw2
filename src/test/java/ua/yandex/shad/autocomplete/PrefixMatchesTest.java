@@ -7,6 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 
 import org.mockito.runners.MockitoJUnitRunner;
@@ -21,8 +22,8 @@ public class PrefixMatchesTest {
     @InjectMocks
     private PrefixMatches prefixMatches = new PrefixMatches();
 
-    private static Tuple first = new Tuple("one", 1);
-    private static Tuple second = new Tuple("two", 2);
+    private Tuple first = new Tuple("one", 3);
+    private Tuple second = new Tuple("apple", 5);
 
     @Test
     public void testLoad_withNoParameters_sizeIsZero() {
@@ -36,28 +37,26 @@ public class PrefixMatchesTest {
     @Test
     public void testLoad_withEmptyString_sizeIsZero() {
         int expectedSize = 0;
+        String strings = "";
 
-        int actualSize = prefixMatches.load("");
-
-        assertEquals(expectedSize, actualSize);
-    }
-
-    @Test
-    public void testLoad_withOneWord_sizeIsOne() {
-        int expectedSize = 1;
-
-        int actualSize = prefixMatches.load("one");
+        int actualSize = prefixMatches.load(strings);
 
         assertEquals(expectedSize, actualSize);
     }
 
     @Test
-    public void testLoad_withOneWord_containsThisWord() {
+    public void testLoad_withOneWord_addedOneWord() {
         String strings = "one";
-        String expectedWord = "one";
 
         prefixMatches.load(strings);
+        verify(trie, times(1)).add(any(Tuple.class));
+    }
 
-        assertTrue(prefixMatches.contains(expectedWord));
+    @Test
+    public void testLoad_withOneWord_addedOddWord() {
+        String strings = "one";
+
+        prefixMatches.load(strings);
+        verify(trie).add(Matchers.eq(first));
     }
 }

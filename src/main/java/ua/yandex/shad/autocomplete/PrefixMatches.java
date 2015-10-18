@@ -8,7 +8,12 @@ public class PrefixMatches {
     private Trie trie;
 
     public int load(String... strings) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        for (String string : strings) {
+            for (String str : string.split("\\s+")) {
+                trie.add(new Tuple(str, str.length()));
+            }
+        }
+        return size();
     }
 
     public boolean contains(String word) {
