@@ -28,6 +28,6 @@ public class PrefixMatches {
     }
 
     public int size() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return trie.size();
     }
 }
