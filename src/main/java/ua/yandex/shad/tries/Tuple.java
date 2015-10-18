@@ -19,9 +19,9 @@ public class Tuple {
             return false;
         }
         if (term != null) {
-            return !term.equals(tuple.term);
+            return term.equals(tuple.term);
         } else {
-            return tuple.term != null;
+            return tuple.term == null;
         }
     }
 
