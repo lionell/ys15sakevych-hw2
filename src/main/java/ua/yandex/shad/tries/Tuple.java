@@ -1,8 +1,13 @@
 package ua.yandex.shad.tries;
 
 public class Tuple {
-    public final String term;
-    public final int weight;
+    private final String term;
+    private final int weight;
+
+    public Tuple(String term, int weight) {
+        this.term = term;
+        this.weight = weight;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -35,8 +40,11 @@ public class Tuple {
         return result;
     }
 
-    public Tuple(String term, int weight) {
-        this.term = term;
-        this.weight = weight;
+    public String term() {
+        return term;
+    }
+
+    public int weight() {
+        return weight;
     }
 }
