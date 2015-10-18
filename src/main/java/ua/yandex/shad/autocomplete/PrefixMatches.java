@@ -1,17 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ua.yandex.shad.autocomplete;
 
 import ua.yandex.shad.tries.Tuple;
 import ua.yandex.shad.tries.Trie;
 
-/**
- *
- * @author andrii
- */
 public class PrefixMatches {
 
     private Trie trie;
