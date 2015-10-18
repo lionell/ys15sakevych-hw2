@@ -3,7 +3,6 @@ package ua.yandex.shad.autocomplete;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -26,7 +25,7 @@ public class PrefixMatchesTest {
     private Tuple second = new Tuple("apple", 5);
 
     @Test
-    public void testLoad_withNoParameters_sizeIsZero() {
+    public void testLoad_noParameters_sizeIsZero() {
         int expectedSize = 0;
 
         int actualSize = prefixMatches.load();
@@ -35,7 +34,7 @@ public class PrefixMatchesTest {
     }
 
     @Test
-    public void testLoad_withEmptyString_sizeIsZero() {
+    public void testLoad_emptyString_sizeIsZero() {
         int expectedSize = 0;
         String strings = "";
 
@@ -45,18 +44,23 @@ public class PrefixMatchesTest {
     }
 
     @Test
-    public void testLoad_withOneWord_addedOneWord() {
+    public void testLoad_oneWord_wordAdded() {
         String strings = "one";
 
         prefixMatches.load(strings);
-        verify(trie, times(1)).add(any(Tuple.class));
+        verify(trie, times(1)).add(Matchers.eq(first));
+        verify(trie).add(Matchers.eq(first));
     }
 
     @Test
-    public void testLoad_withOneWord_addedOddWord() {
-        String strings = "one";
+    public void testLoad_twoWordsSeparatedWithSpace_addedTwoWords() {
+        String strings = "one apple";
 
         prefixMatches.load(strings);
+        verify(trie, times(1)).add(Matchers.eq(first));
+        verify(trie, times(1)).add(Matchers.eq(second));
+        verify(trie, times(2)).add(any(Tuple.class));
         verify(trie).add(Matchers.eq(first));
+        verify(trie).add(Matchers.eq(second));
     }
 }

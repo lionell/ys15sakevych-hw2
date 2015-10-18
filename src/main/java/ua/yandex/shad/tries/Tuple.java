@@ -6,19 +6,31 @@ public class Tuple {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Tuple tuple = (Tuple) o;
 
-        if (weight != tuple.weight) return false;
-        return !(term != null ? !term.equals(tuple.term) : tuple.term != null);
-
+        if (weight != tuple.weight) {
+            return false;
+        }
+        if (term != null) {
+            return !term.equals(tuple.term);
+        } else {
+            return tuple.term != null;
+        }
     }
 
     @Override
     public int hashCode() {
-        int result = term != null ? term.hashCode() : 0;
+        int result = 0;
+        if (term != null) {
+            result = term.hashCode();
+        }
         result = 31 * result + weight;
         return result;
     }
