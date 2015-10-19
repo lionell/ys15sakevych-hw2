@@ -9,6 +9,7 @@ public class RWayTrie implements Trie {
     private int size;
 
     static class Node {
+
         private int value;
         private Node[] next = new Node[R];
 
@@ -49,7 +50,7 @@ public class RWayTrie implements Trie {
 
     @Override
     public boolean contains(String word) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return get(word) != null;
     }
 
     @Override
@@ -84,7 +85,10 @@ public class RWayTrie implements Trie {
         Node current = root;
         for (char c : key.toCharArray()) {
             int i = toIndex(c);
-            if (current.next[i] == null) break;
+            if (current.next[i] == null) {
+                current = null;
+                break;
+            }
             current = current.next[i];
         }
         return current;

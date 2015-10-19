@@ -94,7 +94,6 @@ public class RWayTrieTest {
         int expectedValue = 5;
 
         trie.add(appleMock);
-
         int actualValue =
                 trie.root()
                         .getNext(toIndex('a'))
@@ -111,16 +110,12 @@ public class RWayTrieTest {
     public void testContains_hitWord_positiveResult() {
         String word = "one";
 
-        trie.add(oneMock);
-
         assertTrue(trie.contains(word));
     }
 
     @Test
     public void testContains_missWord_negativeResult() {
         String word = "two";
-
-        trie.add(oneMock);
 
         assertFalse(trie.contains(word));
     }
