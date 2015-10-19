@@ -3,14 +3,15 @@ package ua.yandex.shad.tries;
 public class RWayTrie implements Trie {
 
     private static final int R = 26;
+
     private static final char FIRST_CHAR = 'a';
-
+    private static final int DEFAULT_VALUE = -1;
     private Node root = new Node();
-    private int size;
 
+    private int size;
     static class Node {
 
-        private int value;
+        private int value = DEFAULT_VALUE;
         private Node[] next = new Node[R];
 
         public int getValue() {
@@ -21,13 +22,30 @@ public class RWayTrie implements Trie {
             this.value = value;
         }
 
-        public Node getNext(int i) {
-            return next[i];
+        public Node getNext(char c) {
+            return next[toIndex(c)];
         }
 
-        public void setNext(int i, Node x) {
-            next[i] = x;
+        public void setNext(char c, Node x) {
+            next[toIndex(c)] = x;
         }
+
+        public boolean isEmpty() {
+            return value == DEFAULT_VALUE;
+        }
+
+        public boolean isRedundant() {
+            for (int i = 0; i < R; ++i) {
+                if (next[i] != null) {
+                    return false;
+                }
+            }
+            return isEmpty();
+        }
+    }
+
+    public static int toIndex(char c) {
+        return c - FIRST_CHAR;
     }
 
     @Override
@@ -36,26 +54,31 @@ public class RWayTrie implements Trie {
         int value = t.getWeight();
         Node current = root;
         for (char c : key.toCharArray()) {
-            int i = toIndex(c);
-            if (current.next[i] == null) {
-                current.next[i] = new Node();
+            if (current.getNext(c) == null) {
+                current.setNext(c, new Node());
             }
-            current = current.next[i];
+            current = current.getNext(c);
         }
-        if (current.value == 0) {
-            current.value = value;
+        if (current.isEmpty()) {
+            current.setValue(value);
             size++;
         }
     }
 
     @Override
     public boolean contains(String word) {
-        return get(word) != null;
+        Node node = get(word);
+        return node != null && !node.isEmpty();
     }
 
     @Override
     public boolean delete(String word) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (!contains(word)) {
+            return false;
+        }
+        get(word).setValue(DEFAULT_VALUE);
+        clear(word);
+        return true;
     }
 
     @Override
@@ -73,25 +96,24 @@ public class RWayTrie implements Trie {
         return size;
     }
 
-    private int toIndex(char c) {
-        return c - FIRST_CHAR;
-    }
-
-    private int toChar(int i) {
-        return FIRST_CHAR + i;
-    }
-
     private Node get(String key) {
         Node current = root;
         for (char c : key.toCharArray()) {
-            int i = toIndex(c);
-            if (current.next[i] == null) {
+            if (current.getNext(c) == null) {
                 current = null;
                 break;
             }
-            current = current.next[i];
+            current = current.getNext(c);
         }
         return current;
+    }
+
+    private void clear(String word) {
+        if (word.length() > 0 && get(word).isRedundant()) {
+            String subWord = word.substring(0, word.length() - 1);
+            get(subWord).setNext(word.charAt(word.length() - 1), null);
+            clear(subWord);
+        }
     }
 
     Node getRoot() {

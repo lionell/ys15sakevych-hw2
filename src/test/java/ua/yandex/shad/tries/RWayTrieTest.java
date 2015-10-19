@@ -14,8 +14,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class RWayTrieTest {
 
-    private static final char FIRST_CHAR = 'a';
-
     @Mock private Tuple oneMock;
     @Mock private Tuple appleMock;
     @Mock private Tuple oneDriveMock;
@@ -35,15 +33,15 @@ public class RWayTrieTest {
         when(oneAppleMock.getTerm()).thenReturn("oneapple");
         when(oneAppleMock.getWeight()).thenReturn(8);
 
-        root.setNext(toIndex('o'), new Node());
-        get("o").setNext(toIndex('n'), new Node());
-        get("on").setNext(toIndex('e'), new Node());
+        root.setNext('o', new Node());
+        get("o").setNext('n', new Node());
+        get("on").setNext('e', new Node());
         get("one").setValue(3);
-        get("one").setNext(toIndex('a'), new Node());
-        get("onea").setNext(toIndex('p'), new Node());
-        get("oneap").setNext(toIndex('p'), new Node());
-        get("oneapp").setNext(toIndex('l'), new Node());
-        get("oneappl").setNext(toIndex('e'), new Node());
+        get("one").setNext('a', new Node());
+        get("onea").setNext('p', new Node());
+        get("oneap").setNext('p', new Node());
+        get("oneapp").setNext('l', new Node());
+        get("oneappl").setNext('e', new Node());
         get("oneapple").setValue(5);
         trie.setSize(2);
     }
@@ -83,7 +81,7 @@ public class RWayTrieTest {
     public void testDelete_missWord_negativeResult() {
         String word = "oneapp";
 
-        assertTrue(trie.delete(word));
+        assertFalse(trie.delete(word));
     }
 
     @Test
@@ -104,21 +102,13 @@ public class RWayTrieTest {
         assertEquals(expectedSize, actualSize);
     }
 
-    private int toIndex(char c) {
-        return c - FIRST_CHAR;
-    }
-
-    private int toChar(int i) {
-        return FIRST_CHAR + i;
-    }
-
     private Node get(String key) {
         Node current = root;
         for (char c : key.toCharArray()) {
             if (current == null) {
                 break;
             }
-            current = current.getNext(toIndex(c));
+            current = current.getNext(c);
         }
         return current;
     }
