@@ -12,35 +12,33 @@ import org.mockito.Matchers;
 import org.mockito.runners.MockitoJUnitRunner;
 import ua.yandex.shad.tries.Trie;
 import ua.yandex.shad.tries.Tuple;
-
 import java.util.Iterator;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PrefixMatchesTest {
-    @Mock
-    private Trie trie;
 
-    @InjectMocks
-    private PrefixMatches prefixMatches = new PrefixMatches();
+    @Mock private Trie trie;
 
-    private Tuple first = new Tuple("one", 3);
-    private Tuple second = new Tuple("apple", 5);
-    private Tuple third = new Tuple("onedrive", 8);
-    private Tuple forth = new Tuple("oneapple", 8);
-    private Iterable<String> oneStringIterable = new Iterable<String>() {
+    @InjectMocks private final PrefixMatches prefixMatches = new PrefixMatches();
+
+    private static final Tuple oneTuple = new Tuple("one", 3);
+    private static final Tuple appleTuple = new Tuple("apple", 5);
+    private static final Tuple oneDriveTuple = new Tuple("onedrive", 8);
+    private static final Tuple oneAppleTuple = new Tuple("oneapple", 8);
+    private static final Iterable<String> oneStringIterable = new Iterable<String>() {
         private String[] strings = {"one", "oneapple", "onedrive"};
         @Override
         public Iterator<String> iterator() {
             return new Iterator<String>() {
-                private int cur = 0;
+                private int current = 0;
                 @Override
                 public boolean hasNext() {
-                    return cur < strings.length;
+                    return current < strings.length;
                 }
 
                 @Override
                 public String next() {
-                    return strings[cur++];
+                    return strings[current++];
                 }
             };
         }
@@ -68,7 +66,7 @@ public class PrefixMatchesTest {
 
         prefixMatches.load(strings);
 
-        verify(trie, times(1)).add(eq(first));
+        verify(trie, times(1)).add(eq(oneTuple));
     }
 
     @Test
@@ -77,8 +75,8 @@ public class PrefixMatchesTest {
 
         prefixMatches.load(strings);
 
-        verify(trie, times(1)).add(eq(first));
-        verify(trie, times(1)).add(eq(second));
+        verify(trie, times(1)).add(eq(oneTuple));
+        verify(trie, times(1)).add(eq(appleTuple));
     }
 
     @Test
@@ -87,8 +85,8 @@ public class PrefixMatchesTest {
 
         prefixMatches.load(strings);
 
-        verify(trie, times(1)).add(eq(first));
-        verify(trie, times(1)).add(eq(second));
+        verify(trie, times(1)).add(eq(oneTuple));
+        verify(trie, times(1)).add(eq(appleTuple));
     }
 
     @Test
@@ -97,8 +95,8 @@ public class PrefixMatchesTest {
 
         prefixMatches.load(strings);
 
-        verify(trie, times(1)).add(eq(first));
-        verify(trie, times(1)).add(eq(second));
+        verify(trie, times(1)).add(eq(oneTuple));
+        verify(trie, times(1)).add(eq(appleTuple));
     }
 
     @Test
@@ -152,20 +150,6 @@ public class PrefixMatchesTest {
         verify(trie, times(1)).delete(eq(expectedWord));
         verifyNoMoreInteractions(trie);
     }
-
-    /*@Test
-    public void testWordsWithPrefix_calledMockedMethod() {
-        String word = "apple";
-        PrefixMatches prefixMatchesMock = mock(PrefixMatches.class);
-        when(prefixMatchesMock.wordsWithPrefix(eq("apple"), eq(3))).thenReturn(null);
-        when(prefixMatchesMock.wordsWithPrefix(eq("apple"))).thenCallRealMethod();
-        String expectedWord = "apple";
-        int expectedK = 3;
-
-        prefixMatchesMock.wordsWithPrefix(word);
-
-        verify(prefixMatchesMock, times(1)).wordsWithPrefix(expectedWord, expectedK);
-    }*/
 
     private String generate(Iterable<String> generator) {
         Iterator<String> iterator = generator.iterator();

@@ -9,6 +9,14 @@ public class Tuple {
         this.weight = weight;
     }
 
+    public String getTerm() {
+        return term;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -38,13 +46,5 @@ public class Tuple {
         }
         result = 31 * result + weight;
         return result;
-    }
-
-    public String term() {
-        return term;
-    }
-
-    public int weight() {
-        return weight;
     }
 }
