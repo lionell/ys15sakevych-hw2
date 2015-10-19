@@ -6,11 +6,14 @@ import ua.yandex.shad.tries.Trie;
 public class PrefixMatches {
 
     private Trie trie;
+    private static final int MIN_WORD_LENGTH = 3;
 
     public int load(String... strings) {
         for (String string : strings) {
             for (String str : string.split("\\s+")) {
-                trie.add(new Tuple(str, str.length()));
+                if (str.length() >= MIN_WORD_LENGTH) {
+                    trie.add(new Tuple(str, str.length()));
+                }
             }
         }
         return size();
