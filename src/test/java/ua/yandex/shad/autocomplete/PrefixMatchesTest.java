@@ -28,7 +28,7 @@ public class PrefixMatchesTest {
     public void testLoad_noParameters_nothingAdded() {
         prefixMatches.load();
 
-        verifyZeroInteractions(trie);
+        verify(trie, never()).add(Matchers.any(Tuple.class));
     }
 
     @Test
@@ -37,7 +37,7 @@ public class PrefixMatchesTest {
 
         prefixMatches.load(strings);
 
-        verifyZeroInteractions(trie);
+        verify(trie, never()).add(Matchers.any(Tuple.class));
     }
 
     @Test
@@ -47,7 +47,6 @@ public class PrefixMatchesTest {
         prefixMatches.load(strings);
 
         verify(trie, times(1)).add(Matchers.eq(first));
-        verifyNoMoreInteractions(trie);
     }
 
     @Test
@@ -58,7 +57,6 @@ public class PrefixMatchesTest {
 
         verify(trie, times(1)).add(Matchers.eq(first));
         verify(trie, times(1)).add(Matchers.eq(second));
-        verifyNoMoreInteractions(trie);
     }
 
     @Test
@@ -69,7 +67,6 @@ public class PrefixMatchesTest {
 
         verify(trie, times(1)).add(Matchers.eq(first));
         verify(trie, times(1)).add(Matchers.eq(second));
-        verifyNoMoreInteractions(trie);
     }
 
     @Test
@@ -80,7 +77,6 @@ public class PrefixMatchesTest {
 
         verify(trie, times(1)).add(Matchers.eq(first));
         verify(trie, times(1)).add(Matchers.eq(second));
-        verifyNoMoreInteractions(trie);
     }
 
     @Test
@@ -89,7 +85,7 @@ public class PrefixMatchesTest {
 
         prefixMatches.load(strings);
 
-        verifyZeroInteractions(trie);
+        verify(trie, never()).add(any(Tuple.class));
     }
 
     @Test
