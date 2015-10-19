@@ -36,54 +36,15 @@ public class RWayTrieTest {
         when(oneAppleMock.getWeight()).thenReturn(8);
 
         root.setNext(toIndex('o'), new Node());
-        root.getNext(toIndex('o'))
-                .setNext(toIndex('n'), new Node());
-        root.getNext(toIndex('o'))
-                .getNext(toIndex('n'))
-                .setNext(toIndex('e'), new Node());
-        root.getNext(toIndex('o'))
-                .getNext(toIndex('n'))
-                .getNext(toIndex('e'))
-                .setValue(3);
-        root.getNext(toIndex('o'))
-                .getNext(toIndex('n'))
-                .getNext(toIndex('e'))
-                .setNext(toIndex('a'), new Node());
-        root.getNext(toIndex('o'))
-                .getNext(toIndex('n'))
-                .getNext(toIndex('e'))
-                .getNext(toIndex('a'))
-                .setNext(toIndex('p'), new Node());
-        root.getNext(toIndex('o'))
-                .getNext(toIndex('n'))
-                .getNext(toIndex('e'))
-                .getNext(toIndex('a'))
-                .getNext(toIndex('p'))
-                .setNext(toIndex('p'), new Node());
-        root.getNext(toIndex('o'))
-                .getNext(toIndex('n'))
-                .getNext(toIndex('e'))
-                .getNext(toIndex('a'))
-                .getNext(toIndex('p'))
-                .getNext(toIndex('p'))
-                .setNext(toIndex('l'), new Node());
-        root.getNext(toIndex('o'))
-                .getNext(toIndex('n'))
-                .getNext(toIndex('e'))
-                .getNext(toIndex('a'))
-                .getNext(toIndex('p'))
-                .getNext(toIndex('p'))
-                .getNext(toIndex('l'))
-                .setNext(toIndex('e'), new Node());
-        root.getNext(toIndex('o'))
-                .getNext(toIndex('n'))
-                .getNext(toIndex('e'))
-                .getNext(toIndex('a'))
-                .getNext(toIndex('p'))
-                .getNext(toIndex('p'))
-                .getNext(toIndex('l'))
-                .getNext(toIndex('e'))
-                .setValue(5);
+        get("o").setNext(toIndex('n'), new Node());
+        get("on").setNext(toIndex('e'), new Node());
+        get("one").setValue(3);
+        get("one").setNext(toIndex('a'), new Node());
+        get("onea").setNext(toIndex('p'), new Node());
+        get("oneap").setNext(toIndex('p'), new Node());
+        get("oneapp").setNext(toIndex('l'), new Node());
+        get("oneappl").setNext(toIndex('e'), new Node());
+        get("oneapple").setValue(5);
         trie.setSize(2);
     }
 
@@ -92,13 +53,7 @@ public class RWayTrieTest {
         int expectedValue = 5;
 
         trie.add(appleMock);
-        int actualValue =
-                root.getNext(toIndex('a'))
-                        .getNext(toIndex('p'))
-                        .getNext(toIndex('p'))
-                        .getNext(toIndex('l'))
-                        .getNext(toIndex('e'))
-                        .getValue();
+        int actualValue = get("apple").getValue();
 
         assertEquals(expectedValue, actualValue);
     }
@@ -118,6 +73,29 @@ public class RWayTrieTest {
     }
 
     @Test
+    public void testDelete_hitWord_positiveResult() {
+        String word = "oneapple";
+
+        assertTrue(trie.delete(word));
+    }
+
+    @Test
+    public void testDelete_missWord_negativeResult() {
+        String word = "oneapp";
+
+        assertTrue(trie.delete(word));
+    }
+
+    @Test
+    public void testDelete_hitWord_deletedRedundantNodes() {
+        String word = "oneapple";
+
+        trie.delete(word);
+
+        assertNull(get("onea"));
+    }
+
+    @Test
     public void testSize_result() {
         int expectedSize = 2;
 
@@ -132,5 +110,16 @@ public class RWayTrieTest {
 
     private int toChar(int i) {
         return FIRST_CHAR + i;
+    }
+
+    private Node get(String key) {
+        Node current = root;
+        for (char c : key.toCharArray()) {
+            if (current == null) {
+                break;
+            }
+            current = current.getNext(toIndex(c));
+        }
+        return current;
     }
 }

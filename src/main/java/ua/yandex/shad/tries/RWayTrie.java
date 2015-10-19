@@ -13,19 +13,19 @@ public class RWayTrie implements Trie {
         private int value;
         private Node[] next = new Node[R];
 
-        int getValue() {
+        public int getValue() {
             return value;
         }
 
-        void setValue(int value) {
+        public void setValue(int value) {
             this.value = value;
         }
 
-        Node getNext(int i) {
+        public Node getNext(int i) {
             return next[i];
         }
 
-        void setNext(int i, Node x) {
+        public void setNext(int i, Node x) {
             next[i] = x;
         }
     }
@@ -70,7 +70,7 @@ public class RWayTrie implements Trie {
 
     @Override
     public int size() {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        return size;
     }
 
     private int toIndex(char c) {
@@ -98,12 +98,7 @@ public class RWayTrie implements Trie {
         return root;
     }
 
-    int getSize() {
-        return size;
-    }
-
     void setSize(int size) {
         this.size = size;
     }
-
 }
