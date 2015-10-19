@@ -87,4 +87,29 @@ public class PrefixMatchesTest {
         verify(trie).add(Matchers.eq(first));
         verify(trie).add(Matchers.eq(second));
     }
+
+    @Test
+    public void testLoad_wordLengthIsLessThanTwoCharacters_nothingAdded() {
+        String strings = "on";
+
+        prefixMatches.load(strings);
+
+        verify(trie, never()).add(any(Tuple.class));
+    }
+
+    @Test
+    public void testContains_hitWord_positiveResult() {
+        String word = "one";
+        when(trie.contains("one")).thenReturn(true);
+
+        assertTrue(prefixMatches.contains(word));
+    }
+
+    @Test
+    public void testContains_missWord_negativeResult() {
+        String word = "one";
+        when(trie.contains("one")).thenReturn(false);
+
+        assertFalse(prefixMatches.contains(word));
+    }
 }
