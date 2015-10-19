@@ -94,8 +94,16 @@ public class RWayTrie implements Trie {
         return current;
     }
 
-    Node root() {
+    Node getRoot() {
         return root;
+    }
+
+    int getSize() {
+        return size;
+    }
+
+    void setSize(int size) {
+        this.size = size;
     }
 
 }

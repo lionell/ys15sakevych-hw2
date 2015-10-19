@@ -7,9 +7,7 @@ import static ua.yandex.shad.tries.RWayTrie.Node;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -23,9 +21,8 @@ public class RWayTrieTest {
     @Mock private Tuple oneDriveMock;
     @Mock private Tuple oneAppleMock;
 
-    @Spy private Node root = new Node();
-
-    @InjectMocks private static final RWayTrie trie = new RWayTrie();
+    private final RWayTrie trie = new RWayTrie();
+    private final Node root = trie.getRoot();
 
     @Before
     public void setup() {
@@ -87,6 +84,7 @@ public class RWayTrieTest {
                 .getNext(toIndex('l'))
                 .getNext(toIndex('e'))
                 .setValue(5);
+        trie.setSize(2);
     }
 
     @Test
@@ -95,8 +93,7 @@ public class RWayTrieTest {
 
         trie.add(appleMock);
         int actualValue =
-                trie.root()
-                        .getNext(toIndex('a'))
+                root.getNext(toIndex('a'))
                         .getNext(toIndex('p'))
                         .getNext(toIndex('p'))
                         .getNext(toIndex('l'))
@@ -118,6 +115,15 @@ public class RWayTrieTest {
         String word = "two";
 
         assertFalse(trie.contains(word));
+    }
+
+    @Test
+    public void testSize_result() {
+        int expectedSize = 2;
+
+        int actualSize = trie.size();
+
+        assertEquals(expectedSize, actualSize);
     }
 
     private int toIndex(char c) {
