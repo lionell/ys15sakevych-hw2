@@ -114,6 +114,33 @@ public class RWayTrieTest {
     }
 
     @Test
+    public void testWordsWithPrefix_hitsSeveralWords_result() {
+        String pref = "one";
+        String expectedResult = "one oneapple onedrive";
+
+        String actualResult = StringIterables.toString(trie.wordsWithPrefix(pref));
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void testWordsWithPrefix_hitsOneWord_result() {
+        String pref = "oneapp";
+        String expectedResult = "oneapple";
+
+        String actualResult = StringIterables.toString(trie.wordsWithPrefix(pref));
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void testWordsWithPrefix_doNotHitAnyWord_negativeResultIteratorHasNext() {
+        String pref = "two";
+
+        assertFalse(trie.wordsWithPrefix(pref).iterator().hasNext());
+    }
+
+    @Test
     public void testSize_result() {
         int expectedSize = 2;
 
