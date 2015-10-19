@@ -68,7 +68,7 @@ public class PrefixMatchesTest {
 
         prefixMatches.load(strings);
 
-        verify(trie, times(1)).add(Matchers.eq(first));
+        verify(trie, times(1)).add(eq(first));
     }
 
     @Test
@@ -77,8 +77,8 @@ public class PrefixMatchesTest {
 
         prefixMatches.load(strings);
 
-        verify(trie, times(1)).add(Matchers.eq(first));
-        verify(trie, times(1)).add(Matchers.eq(second));
+        verify(trie, times(1)).add(eq(first));
+        verify(trie, times(1)).add(eq(second));
     }
 
     @Test
@@ -87,8 +87,8 @@ public class PrefixMatchesTest {
 
         prefixMatches.load(strings);
 
-        verify(trie, times(1)).add(Matchers.eq(first));
-        verify(trie, times(1)).add(Matchers.eq(second));
+        verify(trie, times(1)).add(eq(first));
+        verify(trie, times(1)).add(eq(second));
     }
 
     @Test
@@ -97,8 +97,8 @@ public class PrefixMatchesTest {
 
         prefixMatches.load(strings);
 
-        verify(trie, times(1)).add(Matchers.eq(first));
-        verify(trie, times(1)).add(Matchers.eq(second));
+        verify(trie, times(1)).add(eq(first));
+        verify(trie, times(1)).add(eq(second));
     }
 
     @Test
@@ -149,7 +149,7 @@ public class PrefixMatchesTest {
 
         prefixMatches.delete(word);
 
-        verify(trie, times(1)).delete(Matchers.eq(expectedWord));
+        verify(trie, times(1)).delete(eq(expectedWord));
         verifyNoMoreInteractions(trie);
     }
 
@@ -157,8 +157,8 @@ public class PrefixMatchesTest {
     public void testWordsWithPrefix_calledMockedMethod() {
         String word = "apple";
         PrefixMatches prefixMatchesMock = mock(PrefixMatches.class);
-        when(prefixMatchesMock.wordsWithPrefix(Matchers.eq("apple"), Matchers.eq(3))).thenReturn(null);
-        when(prefixMatchesMock.wordsWithPrefix(Matchers.eq("apple"))).thenCallRealMethod();
+        when(prefixMatchesMock.wordsWithPrefix(eq("apple"), eq(3))).thenReturn(null);
+        when(prefixMatchesMock.wordsWithPrefix(eq("apple"))).thenCallRealMethod();
         String expectedWord = "apple";
         int expectedK = 3;
 
@@ -177,25 +177,12 @@ public class PrefixMatchesTest {
     }
 
     @Test
-    public void testWordsWithPrefix_kEqualsOne_result() {
-        String pref = "one";
-        String expectedResult = "one";
-        int k = 1;
-        when(trie.wordsWithPrefix(Matchers.eq("one"))).thenReturn(oneStringIterable);
-
-        String actualResult = generate(prefixMatches.wordsWithPrefix(pref, k));
-
-        assertEquals(expectedResult, actualResult);
-    }
-
-    @Test
-    public void testWordsWithPrefix_kEqualsTwo_result() {
+    public void testWordsWithPrefix_result() {
         String pref = "one";
         String expectedResult = "one oneapple onedrive";
-        int k = 2;
-        when(trie.wordsWithPrefix(Matchers.eq("one"))).thenReturn(oneStringIterable);
+        when(trie.wordsWithPrefix(eq("one"))).thenReturn(oneStringIterable);
 
-        String actualResult = generate(prefixMatches.wordsWithPrefix(pref, k));
+        String actualResult = generate(prefixMatches.wordsWithPrefix(pref));
 
         assertEquals(expectedResult, actualResult);
     }
@@ -203,8 +190,39 @@ public class PrefixMatchesTest {
     @Test(expected = IllegalArgumentException.class)
     public void testWordsWithPrefix_prefixIsLessThenTwoSymbols_exceptionThrown() {
         String pref = "on";
+        when(trie.wordsWithPrefix(eq("one"))).thenReturn(oneStringIterable);
+        prefixMatches.wordsWithPrefix(pref);
+    }
+
+    @Test
+    public void testWordsWithPrefixWithK_kEqualsOne_result() {
+        String pref = "one";
+        String expectedResult = "one";
+        int k = 1;
+        when(trie.wordsWithPrefix(eq("one"))).thenReturn(oneStringIterable);
+
+        String actualResult = generate(prefixMatches.wordsWithPrefix(pref, k));
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void testWordsWithPrefixWithK_kEqualsTwo_result() {
+        String pref = "one";
+        String expectedResult = "one oneapple onedrive";
         int k = 2;
-        when(trie.wordsWithPrefix(Matchers.eq("one"))).thenReturn(oneStringIterable);
+        when(trie.wordsWithPrefix(eq("one"))).thenReturn(oneStringIterable);
+
+        String actualResult = generate(prefixMatches.wordsWithPrefix(pref, k));
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testWordsWithPrefixWithK_prefixIsLessThenTwoSymbols_exceptionThrown() {
+        String pref = "on";
+        int k = 2;
+        when(trie.wordsWithPrefix(eq("one"))).thenReturn(oneStringIterable);
         prefixMatches.wordsWithPrefix(pref, k);
     }
 
