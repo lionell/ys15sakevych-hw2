@@ -2,20 +2,20 @@ package ua.yandex.shad.collections;
 
 import java.util.Iterator;
 
-public class LimitedGeneratorDecorator implements Iterable<String> {
+public class LimitDecorator implements Iterable<String> {
 
     private final Iterable<String> generator;
     private final int limiter;
 
-    public LimitedGeneratorDecorator(Iterable<String> generator, int limiter) {
+    public LimitDecorator(Iterable<String> generator, int limiter) {
         this.generator = generator;
         this.limiter = limiter;
     }
 
     public Iterator<String> iterator() {
-        return new LimitedGeneratorIterator();
+        return new LimitedIterator();
     }
-    private class LimitedGeneratorIterator implements Iterator<String> {
+    private class LimitedIterator implements Iterator<String> {
 
         private Iterator<String> iterator = generator.iterator();
         private String next;

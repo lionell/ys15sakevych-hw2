@@ -83,7 +83,7 @@ public class RWayTrie implements Trie {
 
     @Override
     public Iterable<String> words() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return wordsWithPrefix("");
     }
 
     @Override

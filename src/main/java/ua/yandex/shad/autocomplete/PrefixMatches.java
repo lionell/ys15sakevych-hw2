@@ -1,6 +1,6 @@
 package ua.yandex.shad.autocomplete;
 
-import ua.yandex.shad.collections.LimitedGeneratorDecorator;
+import ua.yandex.shad.collections.LimitDecorator;
 import ua.yandex.shad.tries.Tuple;
 import ua.yandex.shad.tries.Trie;
 
@@ -37,7 +37,7 @@ public class PrefixMatches {
         if (pref.length() < MIN_WORD_LENGTH) {
             throw new IllegalArgumentException();
         }
-        return new LimitedGeneratorDecorator(trie.wordsWithPrefix(pref), k);
+        return new LimitDecorator(trie.wordsWithPrefix(pref), k);
     }
 
     public int size() {

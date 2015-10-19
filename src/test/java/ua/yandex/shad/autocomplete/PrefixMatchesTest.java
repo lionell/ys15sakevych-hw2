@@ -2,6 +2,7 @@ package ua.yandex.shad.autocomplete;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+import static ua.yandex.shad.collections.StringIterables.toString;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +11,7 @@ import org.mockito.Mock;
 
 import org.mockito.Matchers;
 import org.mockito.runners.MockitoJUnitRunner;
+import ua.yandex.shad.collections.StringIterables;
 import ua.yandex.shad.tries.Trie;
 import ua.yandex.shad.tries.Tuple;
 import java.util.Iterator;
@@ -21,11 +23,11 @@ public class PrefixMatchesTest {
 
     @InjectMocks private final PrefixMatches prefixMatches = new PrefixMatches();
 
-    private static final Tuple oneTuple = new Tuple("one", 3);
-    private static final Tuple appleTuple = new Tuple("apple", 5);
-    private static final Tuple oneDriveTuple = new Tuple("onedrive", 8);
-    private static final Tuple oneAppleTuple = new Tuple("oneapple", 8);
-    private static final Iterable<String> oneStringIterable = new Iterable<String>() {
+    private final Tuple oneTuple = new Tuple("one", 3);
+    private final Tuple appleTuple = new Tuple("apple", 5);
+    private final Tuple oneDriveTuple = new Tuple("onedrive", 8);
+    private final Tuple oneAppleTuple = new Tuple("oneapple", 8);
+    private final Iterable<String> oneStringIterable = new Iterable<String>() {
         private String[] strings = {"one", "oneapple", "onedrive"};
         @Override
         public Iterator<String> iterator() {
@@ -151,22 +153,13 @@ public class PrefixMatchesTest {
         verifyNoMoreInteractions(trie);
     }
 
-    private String generate(Iterable<String> generator) {
-        Iterator<String> iterator = generator.iterator();
-        String result = iterator.next();
-        while(iterator.hasNext()) {
-            result += " " + iterator.next();
-        }
-        return result;
-    }
-
     @Test
     public void testWordsWithPrefix_result() {
         String pref = "one";
         String expectedResult = "one oneapple onedrive";
         when(trie.wordsWithPrefix(eq("one"))).thenReturn(oneStringIterable);
 
-        String actualResult = generate(prefixMatches.wordsWithPrefix(pref));
+        String actualResult = StringIterables.toString(prefixMatches.wordsWithPrefix(pref));
 
         assertEquals(expectedResult, actualResult);
     }
@@ -185,7 +178,7 @@ public class PrefixMatchesTest {
         int k = 1;
         when(trie.wordsWithPrefix(eq("one"))).thenReturn(oneStringIterable);
 
-        String actualResult = generate(prefixMatches.wordsWithPrefix(pref, k));
+        String actualResult = StringIterables.toString(prefixMatches.wordsWithPrefix(pref, k));
 
         assertEquals(expectedResult, actualResult);
     }
@@ -197,7 +190,7 @@ public class PrefixMatchesTest {
         int k = 2;
         when(trie.wordsWithPrefix(eq("one"))).thenReturn(oneStringIterable);
 
-        String actualResult = generate(prefixMatches.wordsWithPrefix(pref, k));
+        String actualResult = StringIterables.toString(prefixMatches.wordsWithPrefix(pref, k));
 
         assertEquals(expectedResult, actualResult);
     }

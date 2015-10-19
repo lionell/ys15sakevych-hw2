@@ -3,6 +3,7 @@ package ua.yandex.shad.tries;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static ua.yandex.shad.tries.RWayTrie.Node;
+import static ua.yandex.shad.collections.StringIterables.toString;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
 import org.mockito.runners.MockitoJUnitRunner;
+import ua.yandex.shad.collections.StringIterables;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RWayTrieTest {
@@ -100,6 +102,15 @@ public class RWayTrieTest {
         trie.delete(word);
 
         assertNotNull(get("oneapple"));
+    }
+
+    @Test
+    public void testWords_result() {
+        String expectedResult = "one oneapple onedrive";
+
+        String actualResult = StringIterables.toString(trie.words());
+
+        assertEquals(expectedResult, actualResult);
     }
 
     @Test
