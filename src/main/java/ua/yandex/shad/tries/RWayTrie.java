@@ -2,13 +2,13 @@ package ua.yandex.shad.tries;
 
 public class RWayTrie implements Trie {
 
-    private static final int R = 26;
+    public static final int R = 26;
+    public static final char FIRST_CHAR = 'a';
+    public static final int DEFAULT_VALUE = -1;
 
-    private static final char FIRST_CHAR = 'a';
-    private static final int DEFAULT_VALUE = -1;
     private Node root = new Node();
-
     private int size;
+
     static class Node {
 
         private int value = DEFAULT_VALUE;
@@ -18,8 +18,8 @@ public class RWayTrie implements Trie {
             return value;
         }
 
-        public void setValue(int value) {
-            this.value = value;
+        public void setValue(int newValue) {
+            this.value = newValue;
         }
 
         public Node getNext(char c) {
@@ -120,7 +120,7 @@ public class RWayTrie implements Trie {
         return root;
     }
 
-    void setSize(int size) {
-        this.size = size;
+    void setSize(int newSize) {
+        this.size = newSize;
     }
 }

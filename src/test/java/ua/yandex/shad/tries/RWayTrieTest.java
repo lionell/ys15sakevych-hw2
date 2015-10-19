@@ -94,6 +94,15 @@ public class RWayTrieTest {
     }
 
     @Test
+    public void testDelete_hitWord_nodesDoNotChanged() {
+        String word = "one";
+
+        trie.delete(word);
+
+        assertNotNull(get("oneapple"));
+    }
+
+    @Test
     public void testSize_result() {
         int expectedSize = 2;
 
