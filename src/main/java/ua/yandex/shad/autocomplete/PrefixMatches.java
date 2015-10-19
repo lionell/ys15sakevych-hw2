@@ -1,5 +1,6 @@
 package ua.yandex.shad.autocomplete;
 
+import ua.yandex.shad.collections.LimitedGeneratorDecorator;
 import ua.yandex.shad.tries.Tuple;
 import ua.yandex.shad.tries.Trie;
 
@@ -32,7 +33,10 @@ public class PrefixMatches {
     }
 
     public Iterable<String> wordsWithPrefix(String pref, int k) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (pref.length() < MIN_WORD_LENGTH) {
+            throw new IllegalArgumentException();
+        }
+        return new LimitedGeneratorDecorator(trie.wordsWithPrefix(pref), k);
     }
 
     public int size() {

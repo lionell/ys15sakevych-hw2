@@ -14,6 +14,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ua.yandex.shad.tries.Trie;
 import ua.yandex.shad.tries.Tuple;
 
+import java.util.Iterator;
+
 @RunWith(MockitoJUnitRunner.class)
 public class PrefixMatchesTest {
     @Mock
@@ -24,6 +26,26 @@ public class PrefixMatchesTest {
 
     private Tuple first = new Tuple("one", 3);
     private Tuple second = new Tuple("apple", 5);
+    private Tuple third = new Tuple("onedrive", 8);
+    private Tuple forth = new Tuple("oneapple", 8);
+    private Iterable<String> oneStringIterable = new Iterable<String>() {
+        private String[] strings = {"one", "oneapple", "onedrive"};
+        @Override
+        public Iterator<String> iterator() {
+            return new Iterator<String>() {
+                private int cur = 0;
+                @Override
+                public boolean hasNext() {
+                    return cur < strings.length;
+                }
+
+                @Override
+                public String next() {
+                    return strings[cur++];
+                }
+            };
+        }
+    };
 
     @Test
     public void testLoad_noParameters_nothingAdded() {
@@ -132,7 +154,7 @@ public class PrefixMatchesTest {
         verifyNoMoreInteractions(trie);
     }
 
-    @Test
+    /*@Test
     public void testWordsWithPrefix_calledMockedMethod() {
         String word = "apple";
         PrefixMatches prefixMatchesMock = mock(PrefixMatches.class);
@@ -144,6 +166,47 @@ public class PrefixMatchesTest {
         prefixMatchesMock.wordsWithPrefix(word);
 
         verify(prefixMatchesMock, times(1)).wordsWithPrefix(expectedWord, expectedK);
+    }*/
+
+    private String generate(Iterable<String> generator) {
+        Iterator<String> iterator = generator.iterator();
+        String result = iterator.next();
+        while(iterator.hasNext()) {
+            result += " " + iterator.next();
+        }
+        return result;
+    }
+
+    @Test
+    public void testWordsWithPrefix_kEqualsOne_result() {
+        String pref = "one";
+        String expectedResult = "one";
+        int k = 1;
+        when(trie.wordsWithPrefix(Matchers.eq("one"))).thenReturn(oneStringIterable);
+
+        String actualResult = generate(prefixMatches.wordsWithPrefix(pref, k));
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void testWordsWithPrefix_kEqualsTwo_result() {
+        String pref = "one";
+        String expectedResult = "one oneapple onedrive";
+        int k = 2;
+        when(trie.wordsWithPrefix(Matchers.eq("one"))).thenReturn(oneStringIterable);
+
+        String actualResult = generate(prefixMatches.wordsWithPrefix(pref, k));
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testWordsWithPrefix_prefixIsLessThenTwoSymbols_exceptionThrown() {
+        String pref = "on";
+        int k = 2;
+        when(trie.wordsWithPrefix(Matchers.eq("one"))).thenReturn(oneStringIterable);
+        prefixMatches.wordsWithPrefix(pref, k);
     }
 
     @Test
