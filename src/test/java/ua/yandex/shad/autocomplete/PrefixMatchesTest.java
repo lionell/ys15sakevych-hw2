@@ -6,9 +6,10 @@ import static org.mockito.Mockito.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Spy;
 
+import org.mockito.Matchers;
 import org.mockito.runners.MockitoJUnitRunner;
 import ua.yandex.shad.tries.Trie;
 import ua.yandex.shad.tries.Tuple;
@@ -129,5 +130,29 @@ public class PrefixMatchesTest {
 
         verify(trie, times(1)).delete(Matchers.eq(expectedWord));
         verifyNoMoreInteractions(trie);
+    }
+
+    @Test
+    public void testWordsWithPrefix_calledMockedMethod() {
+        String word = "apple";
+        PrefixMatches prefixMatchesMock = mock(PrefixMatches.class);
+        when(prefixMatchesMock.wordsWithPrefix(Matchers.eq("apple"), Matchers.eq(3))).thenReturn(null);
+        when(prefixMatchesMock.wordsWithPrefix(Matchers.eq("apple"))).thenCallRealMethod();
+        String expectedWord = "apple";
+        int expectedK = 3;
+
+        prefixMatchesMock.wordsWithPrefix(word);
+
+        verify(prefixMatchesMock, times(1)).wordsWithPrefix(expectedWord, expectedK);
+    }
+
+    @Test
+    public void testSize_result() {
+        when(trie.size()).thenReturn(13);
+        int expectedSize = 13;
+
+        int actualSize = prefixMatches.size();
+
+        assertEquals(expectedSize, actualSize);
     }
 }

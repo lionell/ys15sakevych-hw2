@@ -5,8 +5,8 @@ import ua.yandex.shad.tries.Trie;
 
 public class PrefixMatches {
 
-    private Trie trie;
     private static final int MIN_WORD_LENGTH = 3;
+    private Trie trie;
 
     public int load(String... strings) {
         for (String string : strings) {
@@ -28,7 +28,7 @@ public class PrefixMatches {
     }
 
     public Iterable<String> wordsWithPrefix(String pref) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return wordsWithPrefix(pref, 3);
     }
 
     public Iterable<String> wordsWithPrefix(String pref, int k) {
