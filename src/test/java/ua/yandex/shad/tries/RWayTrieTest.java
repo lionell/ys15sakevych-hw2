@@ -91,6 +91,17 @@ public class RWayTrieTest {
     }
 
     @Test
+    public void testDelete_hitWord_sizeDecreased() {
+        String word = "oneapple";
+        int expectedSize = 3;
+
+        trie.delete(word);
+        int actualSize = trie.size();
+
+        assertEquals(expectedSize, actualSize);
+    }
+
+    @Test
     public void testDelete_missWord_negativeResult() {
         String word = "oneapp";
 

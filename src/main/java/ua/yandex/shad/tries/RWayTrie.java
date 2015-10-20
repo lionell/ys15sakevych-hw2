@@ -87,6 +87,7 @@ public class RWayTrie implements Trie {
         }
         get(word).setValue(DEFAULT_VALUE);
         clear(word);
+        size--;
         return true;
     }
 
@@ -101,7 +102,7 @@ public class RWayTrie implements Trie {
         if (prefRoot == null) {
             return new StringList();
         }
-        Queue<String> queue = new LinkedList<String>();
+        Queue<String> queue = new LinkedList<>();
         StringList res = new StringList();
         if (!prefRoot.isEmpty()) {
             res.add(pref);
