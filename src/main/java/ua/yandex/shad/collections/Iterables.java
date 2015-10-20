@@ -2,16 +2,16 @@ package ua.yandex.shad.collections;
 
 import java.util.Iterator;
 
-public class StringIterables {
-    public static String toString(Iterable<String> iterable) {
-        Iterator<String> iterator = iterable.iterator();
+public class Iterables<T> {
+    public String toString(Iterable<T> iterable) {
+        Iterator<T> iterator = iterable.iterator();
         StringBuilder stringBuilder = new StringBuilder();
         if (iterator.hasNext()) {
-            stringBuilder.append(iterator.next());
+            stringBuilder.append(iterator.next().toString());
         }
         while (iterator.hasNext()) {
             stringBuilder.append(" ");
-            stringBuilder.append(iterator.next());
+            stringBuilder.append(iterator.next().toString());
         }
         return stringBuilder.toString();
     }

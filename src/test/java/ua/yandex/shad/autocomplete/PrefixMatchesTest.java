@@ -11,7 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Matchers;
 import org.mockito.runners.MockitoJUnitRunner;
 import java.util.Iterator;
-import ua.yandex.shad.collections.StringIterables;
+import ua.yandex.shad.collections.Iterables;
 import ua.yandex.shad.tries.Trie;
 import ua.yandex.shad.tries.Tuple;
 
@@ -158,7 +158,7 @@ public class PrefixMatchesTest {
         String expectedResult = "one oneapple onedrive";
         when(trie.wordsWithPrefix(eq("one"))).thenReturn(oneStringIterable);
 
-        String actualResult = StringIterables.toString(prefixMatches.wordsWithPrefix(pref));
+        String actualResult = new Iterables<String>().toString(prefixMatches.wordsWithPrefix(pref));
 
         assertEquals(expectedResult, actualResult);
     }
@@ -177,7 +177,7 @@ public class PrefixMatchesTest {
         int k = 1;
         when(trie.wordsWithPrefix(eq("one"))).thenReturn(oneStringIterable);
 
-        String actualResult = StringIterables.toString(prefixMatches.wordsWithPrefix(pref, k));
+        String actualResult = new Iterables<String>().toString(prefixMatches.wordsWithPrefix(pref, k));
 
         assertEquals(expectedResult, actualResult);
     }
@@ -189,7 +189,7 @@ public class PrefixMatchesTest {
         int k = 2;
         when(trie.wordsWithPrefix(eq("one"))).thenReturn(oneStringIterable);
 
-        String actualResult = StringIterables.toString(prefixMatches.wordsWithPrefix(pref, k));
+        String actualResult = new Iterables<String>().toString(prefixMatches.wordsWithPrefix(pref, k));
 
         assertEquals(expectedResult, actualResult);
     }

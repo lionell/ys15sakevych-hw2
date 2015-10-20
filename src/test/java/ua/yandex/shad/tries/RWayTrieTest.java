@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
 import org.mockito.runners.MockitoJUnitRunner;
-import ua.yandex.shad.collections.StringIterables;
+import ua.yandex.shad.collections.Iterables;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RWayTrieTest {
@@ -104,10 +104,19 @@ public class RWayTrieTest {
     }
 
     @Test
+    public void testDelete_emptyString_nodesDoNotChanged() {
+        String word = "";
+
+        trie.delete(word);
+
+        assertNotNull(get("oneapple"));
+    }
+
+    @Test
     public void testWords_result() {
         String expectedResult = "one oneapple";
 
-        String actualResult = StringIterables.toString(trie.words());
+        String actualResult = new Iterables<String>().toString(trie.words());
 
         assertEquals(expectedResult, actualResult);
     }
@@ -117,7 +126,7 @@ public class RWayTrieTest {
         String pref = "one";
         String expectedResult = "one oneapple";
 
-        String actualResult = StringIterables.toString(trie.wordsWithPrefix(pref));
+        String actualResult = new Iterables<String>().toString(trie.wordsWithPrefix(pref));
 
         assertEquals(expectedResult, actualResult);
     }
@@ -127,7 +136,7 @@ public class RWayTrieTest {
         String pref = "oneapp";
         String expectedResult = "oneapple";
 
-        String actualResult = StringIterables.toString(trie.wordsWithPrefix(pref));
+        String actualResult = new Iterables<String>().toString(trie.wordsWithPrefix(pref));
 
         assertEquals(expectedResult, actualResult);
     }
