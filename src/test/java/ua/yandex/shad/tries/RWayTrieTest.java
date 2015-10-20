@@ -35,7 +35,9 @@ public class RWayTrieTest {
         when(oneAppleMock.getWeight()).thenReturn(8);
 
         root.setNext('o', new Node());
+        get("o").setValue(1);
         get("o").setNext('n', new Node());
+        get("on").setValue(2);
         get("on").setNext('e', new Node());
         get("one").setValue(3);
         get("one").setNext('a', new Node());
@@ -44,7 +46,7 @@ public class RWayTrieTest {
         get("oneapp").setNext('l', new Node());
         get("oneappl").setNext('e', new Node());
         get("oneapple").setValue(5);
-        trie.setSize(2);
+        trie.setSize(4);
     }
 
     @Test
@@ -55,6 +57,16 @@ public class RWayTrieTest {
         int actualValue = get("apple").getValue();
 
         assertEquals(expectedValue, actualValue);
+    }
+
+    @Test
+    public void testAdd_existingWord_sizeDoNotChanged() {
+        int expectedSize = 4;
+
+        trie.add(oneMock);
+        int actualSize = trie.size();
+
+        assertEquals(expectedSize, actualSize);
     }
 
     @Test
@@ -114,7 +126,7 @@ public class RWayTrieTest {
 
     @Test
     public void testWords_result() {
-        String expectedResult = "one oneapple";
+        String expectedResult = "o on one oneapple";
 
         String actualResult = new Iterables<String>().toString(trie.words());
 
@@ -150,7 +162,7 @@ public class RWayTrieTest {
 
     @Test
     public void testSize_result() {
-        int expectedSize = 2;
+        int expectedSize = 4;
 
         int actualSize = trie.size();
 
