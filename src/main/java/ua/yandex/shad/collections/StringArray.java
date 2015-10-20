@@ -7,7 +7,7 @@ public class StringArray implements Iterable<String> {
     private Node head;
     private Node tail;
 
-    private class Node {
+    private static class Node {
 
         private String value;
         private Node next;

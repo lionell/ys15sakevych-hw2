@@ -95,11 +95,13 @@ public class RWayTrie implements Trie {
 
     @Override
     public Iterable<String> wordsWithPrefix(String pref) {
-        Node root = get(pref);
-        if (root == null) return new StringArray();
+        Node prefRoot = get(pref);
+        if (prefRoot == null) {
+            return new StringArray();
+        }
         StringQueue queue = new StringQueue();
         StringArray res = new StringArray();
-        if (!root.isEmpty()) {
+        if (prefRoot.isEmpty()) {
             res.add(pref);
         }
         queue.add(pref);

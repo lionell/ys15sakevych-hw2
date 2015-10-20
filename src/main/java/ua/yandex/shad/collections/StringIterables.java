@@ -5,13 +5,14 @@ import java.util.Iterator;
 public class StringIterables {
     public static String toString(Iterable<String> iterable) {
         Iterator<String> iterator = iterable.iterator();
-        String result = "";
+        StringBuilder stringBuilder = new StringBuilder();
         if (iterator.hasNext()) {
-            result = iterator.next();
+            stringBuilder.append(iterator.next());
         }
         while (iterator.hasNext()) {
-            result += " " + iterator.next();
+            stringBuilder.append(" ");
+            stringBuilder.append(iterator.next());
         }
-        return result;
+        return stringBuilder.toString();
     }
 }
