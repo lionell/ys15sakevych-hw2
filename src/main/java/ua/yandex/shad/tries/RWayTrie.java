@@ -1,5 +1,7 @@
 package ua.yandex.shad.tries;
 
+import ua.yandex.shad.collections.*;
+
 public class RWayTrie implements Trie {
 
     public static final int R = 26;
@@ -48,19 +50,23 @@ public class RWayTrie implements Trie {
         return c - FIRST_CHAR;
     }
 
+    public static char toChar(int i) {
+        return (char)(FIRST_CHAR + i);
+    }
+
     @Override
     public void add(Tuple t) {
         String key = t.getTerm();
         int value = t.getWeight();
-        Node current = root;
+        Node cur = root;
         for (char c : key.toCharArray()) {
-            if (current.getNext(c) == null) {
-                current.setNext(c, new Node());
+            if (cur.getNext(c) == null) {
+                cur.setNext(c, new Node());
             }
-            current = current.getNext(c);
+            cur = cur.getNext(c);
         }
-        if (current.isEmpty()) {
-            current.setValue(value);
+        if (cur.isEmpty()) {
+            cur.setValue(value);
             size++;
         }
     }
@@ -88,7 +94,28 @@ public class RWayTrie implements Trie {
 
     @Override
     public Iterable<String> wordsWithPrefix(String pref) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        StringQueue q = new StringQueue();
+        StringArray res = new StringArray();
+        Node start = get(pref);
+        if (start != null) {
+            if (!start.isEmpty()) res.add(pref);
+            q.add(pref);
+            while (!q.isEmpty()) {
+                String str = q.remove();
+                Node cur = get(str);
+                for (int i = 0; i < R; ++i) {
+                    Node child = cur.getNext(toChar(i));
+                    if (child != null) {
+                        String childString = str + toChar(i);
+                        q.add(childString);
+                        if (!child.isEmpty()) {
+                            res.add(childString);
+                        }
+                    }
+                }
+            }
+        }
+        return res;
     }
 
     @Override
@@ -97,15 +124,14 @@ public class RWayTrie implements Trie {
     }
 
     private Node get(String key) {
-        Node current = root;
+        Node cur = root;
         for (char c : key.toCharArray()) {
-            if (current.getNext(c) == null) {
-                current = null;
-                break;
+            if (cur.getNext(c) == null) {
+                return null;
             }
-            current = current.getNext(c);
+            cur = cur.getNext(c);
         }
-        return current;
+        return cur;
     }
 
     private void clear(String word) {

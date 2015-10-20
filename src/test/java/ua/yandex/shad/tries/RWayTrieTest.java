@@ -106,7 +106,7 @@ public class RWayTrieTest {
 
     @Test
     public void testWords_result() {
-        String expectedResult = "one oneapple onedrive";
+        String expectedResult = "one oneapple";
 
         String actualResult = StringIterables.toString(trie.words());
 
@@ -116,7 +116,7 @@ public class RWayTrieTest {
     @Test
     public void testWordsWithPrefix_hitsSeveralWords_result() {
         String pref = "one";
-        String expectedResult = "one oneapple onedrive";
+        String expectedResult = "one oneapple";
 
         String actualResult = StringIterables.toString(trie.wordsWithPrefix(pref));
 
