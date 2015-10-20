@@ -22,8 +22,8 @@ public class StringQueue {
             return next;
         }
 
-        public void setNext(Node next) {
-            this.next = next;
+        public void setNext(Node newNext) {
+            this.next = newNext;
         }
     }
 
@@ -39,7 +39,9 @@ public class StringQueue {
     }
 
     public String remove() {
-        if (isEmpty()) throw new IndexOutOfBoundsException();
+        if (isEmpty()) {
+            throw new IndexOutOfBoundsException();
+        }
         String value = tail.getValue();
         tail = tail.getNext();
         if (tail == null) {

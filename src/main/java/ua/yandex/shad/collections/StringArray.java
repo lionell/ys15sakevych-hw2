@@ -24,8 +24,8 @@ public class StringArray implements Iterable<String> {
             return next;
         }
 
-        public void setNext(Node next) {
-            this.next = next;
+        public void setNext(Node newNext) {
+            this.next = newNext;
         }
     }
 
@@ -46,7 +46,7 @@ public class StringArray implements Iterable<String> {
 
     private class StringQueueIterator implements Iterator<String> {
 
-        Node cur = tail;
+        private Node cur = tail;
 
         public boolean hasNext() {
             return cur != null;

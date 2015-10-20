@@ -1,6 +1,7 @@
 package ua.yandex.shad.tries;
 
-import ua.yandex.shad.collections.*;
+import ua.yandex.shad.collections.StringQueue;
+import ua.yandex.shad.collections.StringArray;
 
 public class RWayTrie implements Trie {
 
@@ -51,7 +52,7 @@ public class RWayTrie implements Trie {
     }
 
     public static char toChar(int i) {
-        return (char)(FIRST_CHAR + i);
+        return (char) (FIRST_CHAR + i);
     }
 
     @Override
@@ -94,23 +95,24 @@ public class RWayTrie implements Trie {
 
     @Override
     public Iterable<String> wordsWithPrefix(String pref) {
-        StringQueue q = new StringQueue();
+        Node root = get(pref);
+        if (root == null) return new StringArray();
+        StringQueue queue = new StringQueue();
         StringArray res = new StringArray();
-        Node start = get(pref);
-        if (start != null) {
-            if (!start.isEmpty()) res.add(pref);
-            q.add(pref);
-            while (!q.isEmpty()) {
-                String str = q.remove();
-                Node cur = get(str);
-                for (int i = 0; i < R; ++i) {
-                    Node child = cur.getNext(toChar(i));
-                    if (child != null) {
-                        String childString = str + toChar(i);
-                        q.add(childString);
-                        if (!child.isEmpty()) {
-                            res.add(childString);
-                        }
+        if (!root.isEmpty()) {
+            res.add(pref);
+        }
+        queue.add(pref);
+        while (!queue.isEmpty()) {
+            String parentString = queue.remove();
+            Node parent = get(parentString);
+            for (int i = 0; i < R; ++i) {
+                Node child = parent.getNext(toChar(i));
+                if (child != null) {
+                    String childString = parentString + toChar(i);
+                    queue.add(childString);
+                    if (!child.isEmpty()) {
+                        res.add(childString);
                     }
                 }
             }

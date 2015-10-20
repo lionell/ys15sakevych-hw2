@@ -2,7 +2,6 @@ package ua.yandex.shad.autocomplete;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import static ua.yandex.shad.collections.StringIterables.toString;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,10 +10,10 @@ import org.mockito.Mock;
 
 import org.mockito.Matchers;
 import org.mockito.runners.MockitoJUnitRunner;
+import java.util.Iterator;
 import ua.yandex.shad.collections.StringIterables;
 import ua.yandex.shad.tries.Trie;
 import ua.yandex.shad.tries.Tuple;
-import java.util.Iterator;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PrefixMatchesTest {

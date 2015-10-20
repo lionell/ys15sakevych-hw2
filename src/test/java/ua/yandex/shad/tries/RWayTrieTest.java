@@ -3,7 +3,6 @@ package ua.yandex.shad.tries;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static ua.yandex.shad.tries.RWayTrie.Node;
-import static ua.yandex.shad.collections.StringIterables.toString;
 
 import org.junit.Before;
 import org.junit.Test;
