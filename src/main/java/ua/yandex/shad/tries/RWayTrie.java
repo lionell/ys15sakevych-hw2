@@ -101,7 +101,7 @@ public class RWayTrie implements Trie {
         }
         StringQueue queue = new StringQueue();
         StringArray res = new StringArray();
-        if (prefRoot.isEmpty()) {
+        if (!prefRoot.isEmpty()) {
             res.add(pref);
         }
         queue.add(pref);
