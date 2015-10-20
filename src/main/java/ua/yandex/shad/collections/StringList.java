@@ -2,7 +2,7 @@ package ua.yandex.shad.collections;
 
 import java.util.Iterator;
 
-public class StringArray implements Iterable<String> {
+public class StringList implements Iterable<String> {
 
     private Node head;
     private Node tail;

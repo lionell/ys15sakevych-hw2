@@ -1,7 +1,9 @@
 package ua.yandex.shad.tries;
 
-import ua.yandex.shad.collections.StringQueue;
-import ua.yandex.shad.collections.StringArray;
+import ua.yandex.shad.collections.StringList;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class RWayTrie implements Trie {
 
@@ -97,10 +99,10 @@ public class RWayTrie implements Trie {
     public Iterable<String> wordsWithPrefix(String pref) {
         Node prefRoot = get(pref);
         if (prefRoot == null) {
-            return new StringArray();
+            return new StringList();
         }
-        StringQueue queue = new StringQueue();
-        StringArray res = new StringArray();
+        Queue<String> queue = new LinkedList<String>();
+        StringList res = new StringList();
         if (!prefRoot.isEmpty()) {
             res.add(pref);
         }

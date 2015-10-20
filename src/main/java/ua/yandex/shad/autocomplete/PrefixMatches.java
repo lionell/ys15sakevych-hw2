@@ -1,6 +1,7 @@
 package ua.yandex.shad.autocomplete;
 
 import ua.yandex.shad.collections.LimitDecorator;
+import ua.yandex.shad.tries.RWayTrie;
 import ua.yandex.shad.tries.Tuple;
 import ua.yandex.shad.tries.Trie;
 
@@ -8,7 +9,7 @@ public class PrefixMatches {
 
     private static final int MIN_WORD_LENGTH = 3;
     private static final int DEFAULT_K = 3;
-    private Trie trie;
+    private Trie trie = new RWayTrie();
 
     public int load(String... strings) {
         for (String string : strings) {
