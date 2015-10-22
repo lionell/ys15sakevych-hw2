@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
 import org.mockito.runners.MockitoJUnitRunner;
-import ua.yandex.shad.collections.Iterables;
+import ua.yandex.shad.utils.Iterables;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RWayTrieTest {

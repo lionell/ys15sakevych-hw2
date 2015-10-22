@@ -1,4 +1,4 @@
-package ua.yandex.shad.collections;
+package ua.yandex.shad.utils;
 
 import java.util.Iterator;
 

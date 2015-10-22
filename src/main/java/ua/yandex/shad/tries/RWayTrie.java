@@ -1,9 +1,6 @@
 package ua.yandex.shad.tries;
 
-import ua.yandex.shad.collections.StringList;
-
-import java.util.LinkedList;
-import java.util.Queue;
+import ua.yandex.shad.collections.StringArray;
 
 public class RWayTrie implements Trie {
 
@@ -98,18 +95,18 @@ public class RWayTrie implements Trie {
 
     @Override
     public Iterable<String> wordsWithPrefix(String pref) {
+        StringArray res = new StringArray();
         Node prefRoot = get(pref);
         if (prefRoot == null) {
-            return new StringList();
+            return res;
         }
-        Queue<String> queue = new LinkedList<>();
-        StringList res = new StringList();
+        StringArray queue = new StringArray();
         if (!prefRoot.isEmpty()) {
             res.add(pref);
         }
         queue.add(pref);
-        while (!queue.isEmpty()) {
-            String parentString = queue.remove();
+        for (int index = 0; index < queue.size(); ++index) {
+            String parentString = queue.get(index);
             Node parent = get(parentString);
             for (int i = 0; i < R; ++i) {
                 Node child = parent.getNext(toChar(i));

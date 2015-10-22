@@ -11,7 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Matchers;
 import org.mockito.runners.MockitoJUnitRunner;
 import java.util.Iterator;
-import ua.yandex.shad.collections.Iterables;
+import ua.yandex.shad.utils.Iterables;
 import ua.yandex.shad.tries.Trie;
 import ua.yandex.shad.tries.Tuple;
 
