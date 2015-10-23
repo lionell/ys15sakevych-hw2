@@ -136,8 +136,7 @@ public class StringArray implements Array<String> {
      */
     public void add(String value) {
         ensureCapacity(size + 1);
-        data[size] = value;
-        size++;
+        data[size++] = value;
     }
 
     /**
@@ -172,15 +171,17 @@ public class StringArray implements Array<String> {
      */
     private class StringArrayIterator implements Iterator<String> {
 
+        private int index = 0;
+
         public boolean hasNext() {
-            return false;
+            return index < size;
         }
 
         public String next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
-            return null;
+            return data[index++];
         }
     }
 

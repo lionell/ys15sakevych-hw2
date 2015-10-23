@@ -27,6 +27,7 @@ package ua.yandex.shad.tries;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static ua.yandex.shad.tries.RWayTrie.Node;
+import static ua.yandex.shad.utils.StringIterableUtils.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +35,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
 import org.mockito.runners.MockitoJUnitRunner;
-import ua.yandex.shad.utils.Iterables;
+import ua.yandex.shad.collections.Tuple;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RWayTrieTest {
@@ -168,35 +169,35 @@ public class RWayTrieTest {
     //</editor-fold>
 
     //<editor-fold desc="Tests for words()">
-    /*@Test
+    @Test
     public void testWords_result() {
-        String expectedResult = "o on one oneapple";
+        String[] expectedResult = {"o", "on", "one", "oneapple"};
 
-        String actualResult = new Iterables<String>().toString(trie.words());
+        String[] actualResult = toArray(trie.words());
 
-        assertEquals(expectedResult, actualResult);
-    }*/
+        assertArrayEquals(expectedResult, actualResult);
+    }
     //</editor-fold>
 
     //<editor-fold desc="Tests for wordsWithPrefix(String pref)">
-    /*@Test
+    @Test
     public void testWordsWithPrefix_hitsSeveralWords_result() {
         String pref = "one";
-        String expectedResult = "one oneapple";
+        String[] expectedResult = {"one", "oneapple"};
 
-        String actualResult = new Iterables<String>().toString(trie.wordsWithPrefix(pref));
+        String[] actualResult = toArray(trie.wordsWithPrefix(pref));
 
-        assertEquals(expectedResult, actualResult);
+        assertArrayEquals(expectedResult, actualResult);
     }
 
     @Test
     public void testWordsWithPrefix_hitsOneWord_result() {
         String pref = "oneapp";
-        String expectedResult = "oneapple";
+        String[] expectedResult = {"oneapple"};
 
-        String actualResult = new Iterables<String>().toString(trie.wordsWithPrefix(pref));
+        String[] actualResult = toArray(trie.wordsWithPrefix(pref));
 
-        assertEquals(expectedResult, actualResult);
+        assertArrayEquals(expectedResult, actualResult);
     }
 
     @Test
@@ -204,7 +205,7 @@ public class RWayTrieTest {
         String pref = "two";
 
         assertFalse(trie.wordsWithPrefix(pref).iterator().hasNext());
-    }*/
+    }
     //</editor-fold>
 
     //<editor-fold desc="Tests for size()">

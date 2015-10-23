@@ -25,6 +25,7 @@
 package ua.yandex.shad.tries;
 
 import ua.yandex.shad.collections.StringArray;
+import ua.yandex.shad.collections.Tuple;
 
 public class RWayTrie implements Trie {
 
@@ -119,31 +120,29 @@ public class RWayTrie implements Trie {
 
     @Override
     public Iterable<String> wordsWithPrefix(String pref) {
-        StringArray res = new StringArray();
+        StringArray queue = new StringArray();
         Node prefRoot = get(pref);
         if (prefRoot == null) {
-            return res;
-        }
-        StringArray queue = new StringArray();
-        if (!prefRoot.isEmpty()) {
-            res.add(pref);
+            return queue;
         }
         queue.add(pref);
-        for (int index = 0; index < queue.size(); ++index) {
-            String parentString = queue.get(index);
+        for (String parentString : queue) {
             Node parent = get(parentString);
             for (int i = 0; i < R; ++i) {
                 Node child = parent.getNext(toChar(i));
                 if (child != null) {
                     String childString = parentString + toChar(i);
                     queue.add(childString);
-                    if (!child.isEmpty()) {
-                        res.add(childString);
-                    }
                 }
             }
         }
-        return res;
+        StringArray words = new StringArray();
+        for (String nodeString : queue) {
+            if (!get(nodeString).isEmpty()) {
+                words.add(nodeString);
+            }
+        }
+        return words;
     }
 
     @Override

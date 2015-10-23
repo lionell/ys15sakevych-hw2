@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package ua.yandex.shad.tries;
+package ua.yandex.shad.collections;
 
 public class Tuple {
 

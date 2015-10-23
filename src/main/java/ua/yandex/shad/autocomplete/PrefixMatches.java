@@ -26,7 +26,7 @@ package ua.yandex.shad.autocomplete;
 
 import ua.yandex.shad.utils.LimitDecorator;
 import ua.yandex.shad.tries.RWayTrie;
-import ua.yandex.shad.tries.Tuple;
+import ua.yandex.shad.collections.Tuple;
 import ua.yandex.shad.tries.Trie;
 
 public class PrefixMatches {

@@ -26,6 +26,7 @@ package ua.yandex.shad.autocomplete;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+import static ua.yandex.shad.utils.StringIterableUtils.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,9 +36,9 @@ import org.mockito.Mock;
 import org.mockito.Matchers;
 import org.mockito.runners.MockitoJUnitRunner;
 import java.util.Iterator;
-import ua.yandex.shad.utils.Iterables;
+
 import ua.yandex.shad.tries.Trie;
-import ua.yandex.shad.tries.Tuple;
+import ua.yandex.shad.collections.Tuple;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PrefixMatchesTest {
@@ -188,12 +189,12 @@ public class PrefixMatchesTest {
     @Test
     public void testWordsWithPrefix_result() {
         String pref = "one";
-        String expectedResult = "one oneapple onedrive";
+        String[] expectedResult = {"one", "oneapple", "onedrive"};
         when(trie.wordsWithPrefix(eq("one"))).thenReturn(oneStringIterable);
 
-        String actualResult = new Iterables<String>().toString(prefixMatches.wordsWithPrefix(pref));
+        String[] actualResult = toArray(prefixMatches.wordsWithPrefix(pref));
 
-        assertEquals(expectedResult, actualResult);
+        assertArrayEquals(expectedResult, actualResult);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -208,25 +209,25 @@ public class PrefixMatchesTest {
     @Test
     public void testWordsWithPrefixWithK_kEqualsOne_result() {
         String pref = "one";
-        String expectedResult = "one";
+        String[] expectedResult = {"one"};
         int k = 1;
         when(trie.wordsWithPrefix(eq("one"))).thenReturn(oneStringIterable);
 
-        String actualResult = new Iterables<String>().toString(prefixMatches.wordsWithPrefix(pref, k));
+        String[] actualResult = toArray(prefixMatches.wordsWithPrefix(pref, k));
 
-        assertEquals(expectedResult, actualResult);
+        assertArrayEquals(expectedResult, actualResult);
     }
 
     @Test
     public void testWordsWithPrefixWithK_kEqualsTwo_result() {
         String pref = "one";
-        String expectedResult = "one oneapple onedrive";
+        String[] expectedResult = {"one", "oneapple", "onedrive"};
         int k = 2;
         when(trie.wordsWithPrefix(eq("one"))).thenReturn(oneStringIterable);
 
-        String actualResult = new Iterables<String>().toString(prefixMatches.wordsWithPrefix(pref, k));
+        String[] actualResult = toArray(prefixMatches.wordsWithPrefix(pref, k));
 
-        assertEquals(expectedResult, actualResult);
+        assertArrayEquals(expectedResult, actualResult);
     }
 
     @Test(expected = IllegalArgumentException.class)

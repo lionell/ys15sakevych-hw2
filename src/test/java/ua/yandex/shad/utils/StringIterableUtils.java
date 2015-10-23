@@ -24,24 +24,18 @@
 
 package ua.yandex.shad.utils;
 
-import java.util.Iterator;
+import ua.yandex.shad.collections.StringArray;
 
 /**
- * Class is used to compare two instances of classes that implements Iterable
- * interface.
- * @param <T> type of objects in Iterable
+ * Created by lionell on 10/23/15.
  */
-public class Iterables<T> {
-    public String toString(Iterable<T> iterable) {
-        Iterator<T> iterator = iterable.iterator();
-        StringBuilder stringBuilder = new StringBuilder();
-        if (iterator.hasNext()) {
-            stringBuilder.append(iterator.next().toString());
+public class StringIterableUtils {
+
+    public static String[] toArray(Iterable<String> iterable) {
+        StringArray dynamicArray = new StringArray();
+        for (String string : iterable) {
+            dynamicArray.add(string);
         }
-        while (iterator.hasNext()) {
-            stringBuilder.append(" ");
-            stringBuilder.append(iterator.next().toString());
-        }
-        return stringBuilder.toString();
+        return dynamicArray.toArray();
     }
 }

@@ -24,6 +24,8 @@
 
 package ua.yandex.shad.tries;
 
+import ua.yandex.shad.collections.Tuple;
+
 public interface Trie {
 
     /**
