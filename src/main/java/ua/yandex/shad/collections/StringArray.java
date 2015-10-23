@@ -1,3 +1,27 @@
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2015 Ruslan Sakevych
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package ua.yandex.shad.collections;
 
 import java.util.Iterator;
@@ -21,7 +45,6 @@ public class StringArray implements Array<String> {
 
     /**
      * Construct new StringArray with initial capacity.
-     *
      * @param capacity initial capacity of StringArray
      * @throws IllegalArgumentException if capacity is negative
      */
@@ -41,7 +64,6 @@ public class StringArray implements Array<String> {
 
     /**
      * Construct new StringArray from variable length list.
-     *
      * @param values example of array
      */
     public StringArray(String... values) {
@@ -51,7 +73,6 @@ public class StringArray implements Array<String> {
 
     /**
      * Returns the number of elements in array.
-     *
      * @return array size
      */
     public int size() {
@@ -60,7 +81,6 @@ public class StringArray implements Array<String> {
 
     /**
      * Converts StringArray to array of Strings.
-     *
      * @return new instance of array of String with elements from StringArray
      */
     public String[] toArray() {
@@ -71,7 +91,6 @@ public class StringArray implements Array<String> {
 
     /**
      * Returns element of StringArray on 'index' position.
-     *
      * @param index number of element in StringArray
      * @return element on 'index' position
      * @throws IndexOutOfBoundsException
@@ -84,7 +103,6 @@ public class StringArray implements Array<String> {
 
     /**
      * Set element of StringArray on 'index' position to 'value'.
-     *
      * @param index number of element in StringArray
      * @param value new value of element on 'index' position
      * @throws IndexOutOfBoundsException
@@ -97,7 +115,6 @@ public class StringArray implements Array<String> {
 
     /**
      * Enlarge array capacity if needed.
-     *
      * @param minCapacity minimal capacity to fit
      * NOTE! element with index minCapacity is unreachable.
      */
@@ -112,7 +129,6 @@ public class StringArray implements Array<String> {
 
     /**
      * Adds new element to the end of array
-     *
      * @param value value of element to add
      */
     public void add(String value) {
@@ -123,7 +139,6 @@ public class StringArray implements Array<String> {
 
     /**
      * Adds elements from given String[] to the end of array
-     *
      * @param values array of Strings to add
      */
     public void add(String[] values) {
@@ -134,7 +149,6 @@ public class StringArray implements Array<String> {
 
     /**
      * Checks if array is empty.
-     *
      * @return true if there are no elements in array
      */
     public boolean isEmpty() {
@@ -143,7 +157,6 @@ public class StringArray implements Array<String> {
 
     /**
      * Implementation of Iterable<String> interface.
-     *
      * @return instance of iterator
      */
     public Iterator<String> iterator() {
@@ -152,7 +165,6 @@ public class StringArray implements Array<String> {
 
     /**
      * Inner iterator class.
-     *
      * @see java.util.Iterator
      */
     private class StringArrayIterator implements Iterator<String> {
@@ -162,13 +174,12 @@ public class StringArray implements Array<String> {
         }
 
         public String next() {
-            return "asda";
+            return null;
         }
     }
 
     /**
      * Checks that index is in right range.
-     *
      * @param index the index to check
      * @throws IndexOutOfBoundsException
      *         if index < 0 or index >= size of StringArray
@@ -181,7 +192,6 @@ public class StringArray implements Array<String> {
 
     /**
      * Package private method used in Tests.
-     *
      * @return capacity of array
      */
     int capacity() {

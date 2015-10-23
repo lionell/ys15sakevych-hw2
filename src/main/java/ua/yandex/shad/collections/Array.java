@@ -83,6 +83,7 @@ public interface Array<T> extends Iterable<T> {
     /**
      * Get iterator, to move through array.
      * @return instance of iterator
+     * @see java.util.Iterator
      */
     Iterator<T> iterator();
 }
