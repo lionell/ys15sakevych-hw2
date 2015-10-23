@@ -25,6 +25,7 @@
 package ua.yandex.shad.utils;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class LimitDecorator implements Iterable<String> {
 
@@ -59,6 +60,9 @@ public class LimitDecorator implements Iterable<String> {
 
         @Override
         public String next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
             String current = next;
             if (iterator.hasNext()) {
                 next = iterator.next();

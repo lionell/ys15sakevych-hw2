@@ -25,6 +25,7 @@
 package ua.yandex.shad.collections;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class StringArray implements Array<String> {
 
@@ -176,6 +177,9 @@ public class StringArray implements Array<String> {
         }
 
         public String next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
             return null;
         }
     }
