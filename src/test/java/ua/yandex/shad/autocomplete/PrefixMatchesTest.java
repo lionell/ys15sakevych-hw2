@@ -1,3 +1,27 @@
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2015 Ruslan Sakevych
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package ua.yandex.shad.autocomplete;
 
 import static org.junit.Assert.*;
@@ -18,6 +42,7 @@ import ua.yandex.shad.tries.Tuple;
 @RunWith(MockitoJUnitRunner.class)
 public class PrefixMatchesTest {
 
+    //<editor-fold desc="Set up tests">
     @Mock private Trie trie;
 
     @InjectMocks private final PrefixMatches prefixMatches = new PrefixMatches();
@@ -44,7 +69,9 @@ public class PrefixMatchesTest {
             };
         }
     };
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for load(String... strings)">
     @Test
     public void testLoad_noParameters_nothingAdded() {
         prefixMatches.load();
@@ -108,7 +135,9 @@ public class PrefixMatchesTest {
 
         verify(trie, never()).add(any(Tuple.class));
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for contains(String word)">
     @Test
     public void testContains_hitWord_positiveResult() {
         String word = "one";
@@ -124,7 +153,9 @@ public class PrefixMatchesTest {
 
         assertFalse(prefixMatches.contains(word));
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for delete(String word)">
     @Test
     public void testDelete_hitWord_positiveResult() {
         String word = "one";
@@ -151,7 +182,9 @@ public class PrefixMatchesTest {
         verify(trie, times(1)).delete(eq(expectedWord));
         verifyNoMoreInteractions(trie);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for wordsWithPrefix(String pref)">
     @Test
     public void testWordsWithPrefix_result() {
         String pref = "one";
@@ -169,7 +202,9 @@ public class PrefixMatchesTest {
         when(trie.wordsWithPrefix(eq("one"))).thenReturn(oneStringIterable);
         prefixMatches.wordsWithPrefix(pref);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for wordsWithPrefix(String pref, int k)">
     @Test
     public void testWordsWithPrefixWithK_kEqualsOne_result() {
         String pref = "one";
@@ -201,7 +236,9 @@ public class PrefixMatchesTest {
         when(trie.wordsWithPrefix(eq("one"))).thenReturn(oneStringIterable);
         prefixMatches.wordsWithPrefix(pref, k);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for size()">
     @Test
     public void testSize_result() {
         when(trie.size()).thenReturn(13);
@@ -211,4 +248,5 @@ public class PrefixMatchesTest {
 
         assertEquals(expectedSize, actualSize);
     }
+    //</editor-fold>
 }
