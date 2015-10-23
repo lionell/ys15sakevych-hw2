@@ -43,6 +43,7 @@ public interface Array<T> extends Iterable<T> {
     /**
      * Get element at {@code index} position.
      * @param index position of element in array
+     * @return element on {@code position}
      */
     T get(int index);
 
@@ -61,7 +62,7 @@ public interface Array<T> extends Iterable<T> {
 
     /**
      * Add new element to array.
-     * {@value} element will be placed at the end of array.
+     * {@code value} element will be placed at the end of array.
      * @param value element to place
      */
     void add(T value);
@@ -76,14 +77,15 @@ public interface Array<T> extends Iterable<T> {
 
     /**
      * Check if array is empty.
-     * @return true of false => empty or not
+     * @return true,  if array is empty
+     *         false, otherwise
      */
     boolean isEmpty();
 
     /**
      * Get iterator, to move through array.
      * @return instance of iterator
-     * @see java.util.Iterator
+     * @see Iterator
      */
     Iterator<T> iterator();
 }

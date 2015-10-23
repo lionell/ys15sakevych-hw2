@@ -94,7 +94,8 @@ public class StringArray implements Array<String> {
      * @param index number of element in StringArray
      * @return element on 'index' position
      * @throws IndexOutOfBoundsException
-     *         if index < 0 or index >= size of StringArray
+     *         if index is less than 0
+     *            or index greater or equals size of StringArray
      */
     public String get(int index) {
         checkBounds(index);
@@ -106,7 +107,8 @@ public class StringArray implements Array<String> {
      * @param index number of element in StringArray
      * @param value new value of element on 'index' position
      * @throws IndexOutOfBoundsException
-     *         if index < 0 or index >= size of StringArray
+     *         if index is less than 0
+     *            or index greater or equals size of StringArray
      */
     public void set(int index, String value) {
         checkBounds(index);
@@ -156,7 +158,7 @@ public class StringArray implements Array<String> {
     }
 
     /**
-     * Implementation of Iterable<String> interface.
+     * Implementation of Iterable interface.
      * @return instance of iterator
      */
     public Iterator<String> iterator() {
@@ -165,7 +167,7 @@ public class StringArray implements Array<String> {
 
     /**
      * Inner iterator class.
-     * @see java.util.Iterator
+     * @see Iterator
      */
     private class StringArrayIterator implements Iterator<String> {
 
@@ -182,7 +184,8 @@ public class StringArray implements Array<String> {
      * Checks that index is in right range.
      * @param index the index to check
      * @throws IndexOutOfBoundsException
-     *         if index < 0 or index >= size of StringArray
+     *         if index is less than 0
+     *            or index greater or equals size of StringArray
      */
     private void checkBounds(int index) {
         if (index < 0 || index >= size) {
