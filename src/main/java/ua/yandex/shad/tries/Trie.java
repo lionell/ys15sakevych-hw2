@@ -51,7 +51,7 @@ public interface Trie {
     /**
      * Gets <b>all</b> words from trie.
      * @return instance of Iterable interface
-     * @see java.lang.Iterable
+     * @see Iterable
      */
     Iterable<String> words();
 
@@ -59,7 +59,7 @@ public interface Trie {
      * Gets words from trie, that matches {@code pref}.
      * @param pref actual prefix to match
      * @return instance of Iterable interface
-     * @see java.lang.Iterable
+     * @see Iterable
      */
     Iterable<String> wordsWithPrefix(String pref);
 
