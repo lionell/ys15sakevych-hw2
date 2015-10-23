@@ -56,3 +56,6 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
+
+# Custom files
+/src/main/java/io/github/lionell/Main.java
