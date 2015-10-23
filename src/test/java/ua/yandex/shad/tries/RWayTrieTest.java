@@ -1,3 +1,27 @@
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2015 Ruslan Sakevych
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package ua.yandex.shad.tries;
 
 import static org.junit.Assert.*;
@@ -15,6 +39,7 @@ import ua.yandex.shad.utils.Iterables;
 @RunWith(MockitoJUnitRunner.class)
 public class RWayTrieTest {
 
+    //<editor-fold desc="Set up tests">
     @Mock private Tuple oneMock;
     @Mock private Tuple appleMock;
     @Mock private Tuple oneDriveMock;
@@ -24,7 +49,7 @@ public class RWayTrieTest {
     private final Node root = trie.getRoot();
 
     @Before
-    public void setup() {
+    public void setUp() {
         when(oneMock.getTerm()).thenReturn("one");
         when(oneMock.getWeight()).thenReturn(3);
         when(appleMock.getTerm()).thenReturn("apple");
@@ -48,7 +73,9 @@ public class RWayTrieTest {
         get("oneapple").setValue(5);
         trie.setSize(4);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for add(Tuple t)">
     @Test
     public void testAdd_result() {
         int expectedValue = 5;
@@ -68,7 +95,9 @@ public class RWayTrieTest {
 
         assertEquals(expectedSize, actualSize);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for contains(String word)">
     @Test
     public void testContains_hitWord_positiveResult() {
         String word = "one";
@@ -82,7 +111,9 @@ public class RWayTrieTest {
 
         assertFalse(trie.contains(word));
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for delete(String word)">
     @Test
     public void testDelete_hitWord_positiveResult() {
         String word = "oneapple";
@@ -134,7 +165,9 @@ public class RWayTrieTest {
 
         assertNotNull(get("oneapple"));
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for words()">
     @Test
     public void testWords_result() {
         String expectedResult = "o on one oneapple";
@@ -143,7 +176,9 @@ public class RWayTrieTest {
 
         assertEquals(expectedResult, actualResult);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for wordsWithPrefix(String pref)">
     @Test
     public void testWordsWithPrefix_hitsSeveralWords_result() {
         String pref = "one";
@@ -170,7 +205,9 @@ public class RWayTrieTest {
 
         assertFalse(trie.wordsWithPrefix(pref).iterator().hasNext());
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for size()">
     @Test
     public void testSize_result() {
         int expectedSize = 4;
@@ -179,7 +216,9 @@ public class RWayTrieTest {
 
         assertEquals(expectedSize, actualSize);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Some additional methods">
     private Node get(String key) {
         Node current = root;
         for (char c : key.toCharArray()) {
@@ -190,4 +229,5 @@ public class RWayTrieTest {
         }
         return current;
     }
+    //</editor-fold>
 }
