@@ -100,6 +100,7 @@ public class PrefixMatches {
      * @param pref actual prefix to match
      * @param k number of different lengths
      * @return instance of Iterable class with words
+     * @see Iterable
      */
     public Iterable<String> wordsWithPrefix(String pref, int k) {
         if (pref.length() < MIN_WORD_LENGTH) {
