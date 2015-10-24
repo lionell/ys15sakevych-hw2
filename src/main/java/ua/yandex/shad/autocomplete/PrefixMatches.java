@@ -31,10 +31,28 @@ import ua.yandex.shad.tries.Trie;
 
 public class PrefixMatches {
 
+    /**
+     * Lower bound of word length.
+     */
     private static final int MIN_WORD_LENGTH = 3;
+
+    /**
+     * Default value for parameter K in wordsWithPrefix method.
+     */
     private static final int DEFAULT_K = 3;
+
+    /**
+     * Actual Trie to store data.
+     */
     private Trie trie = new RWayTrie();
 
+    /**
+     * Loads words from {@code strings} to Trie.
+     * If string form {@code strings} contains more than on word then
+     * it will be split by whitespaces.
+     * @param strings input strings
+     * @return amount of words added
+     */
     public int load(String... strings) {
         for (String string : strings) {
             for (String str : string.split("\\s+")) {
@@ -46,18 +64,43 @@ public class PrefixMatches {
         return size();
     }
 
+    /**
+     * Checks if {@code word} is in memory.
+     * @param word actual word to check
+     * @return true,  if word is in memory
+     *         false, otherwise
+     */
     public boolean contains(String word) {
         return trie.contains(word);
     }
 
+    /**
+     * Deletes {@code word} form memory.
+     * @param word actual word to delete
+     * @return true,  if success
+     *         false, otherwise
+     */
     public boolean delete(String word) {
         return trie.delete(word);
     }
 
+    /**
+     * Gets words that matches {@code pref}.
+     * @param pref actual prefix ot match.
+     * @return instance of Iterable class with words
+     * @see Iterable
+     */
     public Iterable<String> wordsWithPrefix(String pref) {
         return wordsWithPrefix(pref, DEFAULT_K);
     }
 
+    /**
+     * Gets words that matches {@code pref} and limit different lengths
+     * with parameter {@code k}.
+     * @param pref actual prefix to match
+     * @param k number of different lengths
+     * @return instance of Iterable class with words
+     */
     public Iterable<String> wordsWithPrefix(String pref, int k) {
         if (pref.length() < MIN_WORD_LENGTH) {
             throw new IllegalArgumentException();
@@ -65,6 +108,10 @@ public class PrefixMatches {
         return new LimitDecorator(trie.wordsWithPrefix(pref), k);
     }
 
+    /**
+     * Gets amount of words in memory.
+     * @return count of words
+     */
     public int size() {
         return trie.size();
     }
