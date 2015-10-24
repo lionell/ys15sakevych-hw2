@@ -46,11 +46,13 @@ public class RWayTrieTest {
     @Mock private Tuple oneDriveMock;
     @Mock private Tuple oneAppleMock;
 
-    private final RWayTrie trie = new RWayTrie();
-    private final Node root = trie.getRoot();
+    private RWayTrie trie;
+    private Node root;
 
     @Before
     public void setUp() {
+        trie = new RWayTrie();
+        root = trie.getRoot();
         when(oneMock.getTerm()).thenReturn("one");
         when(oneMock.getWeight()).thenReturn(3);
         when(appleMock.getTerm()).thenReturn("apple");

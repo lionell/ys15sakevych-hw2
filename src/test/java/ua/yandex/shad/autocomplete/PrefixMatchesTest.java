@@ -200,6 +200,7 @@ public class PrefixMatchesTest {
     @Test(expected = IllegalArgumentException.class)
     public void testWordsWithPrefix_prefixIsLessThenTwoSymbols_exceptionThrown() {
         String pref = "on";
+
         when(trie.wordsWithPrefix(eq("one"))).thenReturn(oneStringIterable);
         prefixMatches.wordsWithPrefix(pref);
     }

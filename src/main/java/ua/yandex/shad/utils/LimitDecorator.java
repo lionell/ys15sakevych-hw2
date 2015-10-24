@@ -29,21 +29,55 @@ import java.util.NoSuchElementException;
 
 public class LimitDecorator implements Iterable<String> {
 
+    /**
+     * Generator to decorate.
+     */
     private final Iterable<String> generator;
+
+    /**
+     * Amount of lengths of words to match.
+     */
     private final int limiter;
 
+    /**
+     * Constructor is used to set generator and limiter members.
+     * @param generator actual generator to use
+     * @param limiter actual value of limiter to set
+     */
     public LimitDecorator(Iterable<String> generator, int limiter) {
         this.generator = generator;
         this.limiter = limiter;
     }
 
+    /**
+     * Gets iterator to go through decorated generator.
+     * @return desired iterator
+     * @see Iterator
+     */
     public Iterator<String> iterator() {
         return new LimitedIterator();
     }
+
+    /**
+     * Nested class that implements Iterator interface.
+     * Used to create instance in #iterator method.
+     */
     private class LimitedIterator implements Iterator<String> {
 
+        /**
+         * Inner iterator to iterate on generator.
+         */
         private Iterator<String> iterator = generator.iterator();
+
+        /**
+         * Actual next value to return.
+         * Can be <b>null</b>.
+         */
         private String next;
+
+        /**
+         * Stores number of lengths left.
+         */
         private int left = limiter;
 
         {
@@ -53,11 +87,22 @@ public class LimitDecorator implements Iterable<String> {
             }
         }
 
+        /**
+         * Checks if there elements left in generator and checks upper bound of
+         * length to fit.
+         * @return true,  if at least one more element left
+         *         false, otherwise
+         */
         @Override
         public boolean hasNext() {
             return next != null && left >= 0;
         }
 
+        /**
+         * Gets next element(if has).
+         * @return desired element
+         * @throws NoSuchElementException, if there are no element available.
+         */
         @Override
         public String next() {
             if (!hasNext()) {
