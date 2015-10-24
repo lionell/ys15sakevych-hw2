@@ -34,6 +34,7 @@ import org.junit.Test;
  */
 public class LimitDecoratorTest {
 
+    //<editor-fold desc="Set up tests">
     private final Iterable<String> empty = new Iterable<String>() {
         @Override
         public Iterator<String> iterator() {
@@ -92,7 +93,9 @@ public class LimitDecoratorTest {
             };
         }
     };
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for iterator()">
     @Test
     public void testIterator_emptyGenerator_negativeHasNext() {
         int k = 3;
@@ -144,4 +147,5 @@ public class LimitDecoratorTest {
         assertEquals(expectedWord3, iterator.next());
         assertFalse(iterator.hasNext());
     }
+    //</editor-fold>
 }

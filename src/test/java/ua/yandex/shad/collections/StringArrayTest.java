@@ -1,9 +1,7 @@
 package ua.yandex.shad.collections;
 
 import static org.junit.Assert.*;
-import static ua.yandex.shad.utils.StringIterableUtils.*;
 import org.junit.Test;
-
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -22,13 +20,16 @@ import java.util.NoSuchElementException;
 
 public class StringArrayTest {
 
+    //<editor-fold desc="Tests for StringArray(int capacity)">
     @Test(expected = IllegalArgumentException.class)
     public void testCapacityConstructor_negativeCapacity_exception() {
         int capacity = -1;
 
-        StringArray array = new StringArray(capacity);
+        new StringArray(capacity);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for StringArray()">
     @Test
     public void testDefaultConstructor_size() {
         int expectedSize = 0;
@@ -48,7 +49,9 @@ public class StringArrayTest {
 
         assertEquals(expectedCapacity, actualCapacity);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for StringArray(String[] values)">
     @Test
     public void testStringsConstructor_size() {
         String[] strings = {"one", "two", "three"};
@@ -82,7 +85,9 @@ public class StringArrayTest {
 
         assertArrayEquals(expectedStrings, actualStrings);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for toArray()">
     @Test
     public void testToArray_emptyArray() {
         String[] strings = {};
@@ -93,7 +98,9 @@ public class StringArrayTest {
 
         assertArrayEquals(expectedStrings, actualStrings);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for get(int index)">
     @Test(expected = IndexOutOfBoundsException.class)
     public void testGet_emptyArray() {
         String[] strings = {};
@@ -132,7 +139,9 @@ public class StringArrayTest {
         StringArray array = new StringArray(strings);
         array.get(index);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for set(int index, String value)">
     @Test
     public void testSet() {
         String[] strings = {"one", "two", "three"};
@@ -166,7 +175,9 @@ public class StringArrayTest {
         StringArray array = new StringArray(strings);
         array.set(index, newValue);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for ensureCapacity(int minCapacity)">
     @Test
     public void testEnsureCapacity_minCapacityIsLessThanCurrent() {
         String[] strings = {"one", "two", "three", "four"};
@@ -205,7 +216,9 @@ public class StringArrayTest {
 
         assertEquals(expectedCapacity, actualCapacity);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for add(String value)">
     @Test
     public void testAdd_arraySize() {
         String[] strings = {"one", "two", "three", "four"};
@@ -244,7 +257,9 @@ public class StringArrayTest {
 
         assertArrayEquals(expectedArray, actualArray);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for add(String[] values)">
     @Test
     public void testAddRange_emptyArray_newArray() {
         String[] strings = {"one", "two", "three", "four"};
@@ -296,7 +311,9 @@ public class StringArrayTest {
 
         assertArrayEquals(expectedArray, actualArray);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for isEmpty()">
     @Test
     public void testIsEmpty_emptyArray_true() {
         StringArray array = new StringArray();
@@ -314,7 +331,9 @@ public class StringArrayTest {
 
         assertFalse(actualResult);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Tests for iterator()">
     @Test
     public void testIterator_emptyArray_negativeHasNext() {
         String[] strings = {};
@@ -366,4 +385,5 @@ public class StringArrayTest {
         assertEquals(expectedWord3, iterator.next());
         assertFalse(iterator.hasNext());
     }
+    //</editor-fold>
 }
