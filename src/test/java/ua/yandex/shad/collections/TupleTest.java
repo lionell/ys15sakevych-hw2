@@ -33,6 +33,7 @@ import static org.junit.Assert.*;
  */
 public class TupleTest {
 
+    //<editor-fold desc="Tests for Tuple(String term, int weight)">
     @Test
     public void testTuple_constructor_membersShouldBeSet() {
         String term = "yeah";
@@ -47,6 +48,7 @@ public class TupleTest {
         assertEquals(expectedTerm, actualTerm);
         assertEquals(expectedWeight, actualWeight);
     }
+    //</editor-fold>
 
     //<editor-fold desc="Tests for equals(Object o)">
     @Test
@@ -57,6 +59,16 @@ public class TupleTest {
         Tuple tuple = new Tuple(term, weight);
 
         assertNotEquals(tuple, null);
+    }
+
+    @Test
+    public void testEquals_differentClasses_negativeResult() {
+        String term = "one";
+        int weight = 12;
+
+        Tuple tuple = new Tuple(term, weight);
+
+        assertNotEquals(tuple, new Object());
     }
 
     @Test
@@ -92,6 +104,18 @@ public class TupleTest {
     }
 
     @Test
+    public void testEquals_differentTuplesOneWithNullTerm_negativeResult() {
+        String term = "one";
+        int weight1 = 2;
+        int weight2 = 2;
+
+        Tuple one = new Tuple(term, weight1);
+        Tuple two = new Tuple(null, weight2);
+
+        assertNotEquals(one, two);
+    }
+
+    @Test
     public void testEquals_differentTuples_negativeResult() {
         String term1 = "one";
         int weight1 = 2;
@@ -105,6 +129,7 @@ public class TupleTest {
     }
     //</editor-fold>
 
+    //<editor-fold desc="Tests for hashCode()">
     @Test
     public void testHashCode_equalTuples_equalHashes() {
         String term = "one";
@@ -118,6 +143,17 @@ public class TupleTest {
     }
 
     @Test
+    public void testHashCode_differentTuplesOneWithNullTerm_negativeResult() {
+        int weight = 3;
+        int expectedHashCode = new Tuple("one", 3).hashCode();
+
+        Tuple tuple = new Tuple(null, weight);
+        int actualHashCode = tuple.hashCode();
+
+        assertNotEquals(expectedHashCode, actualHashCode);
+    }
+
+    @Test
     public void testHashCode_differentTuples_differentHashes() {
         String term = "two";
         int weight = 3;
@@ -128,4 +164,5 @@ public class TupleTest {
 
         assertNotEquals(expectedHashCode, actualHashCode);
     }
+    //</editor-fold>
 }
