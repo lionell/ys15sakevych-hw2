@@ -109,8 +109,8 @@ public class TupleTest {
         int weight1 = 2;
         int weight2 = 2;
 
-        Tuple one = new Tuple(term, weight1);
-        Tuple two = new Tuple(null, weight2);
+        Tuple one = new Tuple(null, weight1);
+        Tuple two = new Tuple(term, weight2);
 
         assertNotEquals(one, two);
     }
