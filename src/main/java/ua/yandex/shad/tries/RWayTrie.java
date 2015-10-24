@@ -29,13 +29,34 @@ import ua.yandex.shad.collections.Tuple;
 
 public class RWayTrie implements Trie {
 
+    /**
+     * Amount of links per node.
+     */
     public static final int R = 26;
+
+    /**
+     * First character in alphabet is used.
+     */
     public static final char FIRST_CHAR = 'a';
+
+    /**
+     * Value that represents that Node don't contains anything.
+     */
     public static final int DEFAULT_VALUE = -1;
 
+    /**
+     * Root of the Trie.
+     */
     private Node root = new Node();
+
+    /**
+     * Amount of words stored in trie.
+     */
     private int size;
 
+    /**
+     * Nested class to represent Node of Trie.
+     */
     static class Node {
 
         private int value = DEFAULT_VALUE;
@@ -71,14 +92,28 @@ public class RWayTrie implements Trie {
         }
     }
 
+    /**
+     * Converts character {@code c} to index in link array.
+     * @param c character to convert
+     * @return desired index
+     */
     public static int toIndex(char c) {
         return c - FIRST_CHAR;
     }
 
+    /**
+     * Converts index {@code i} in link array to a character.
+     * @param i actual index in array
+     * @return desired character
+     */
     public static char toChar(int i) {
         return (char) (FIRST_CHAR + i);
     }
 
+    /**
+     * Adds tuple to Trie.
+     * @param t tuple to add
+     */
     @Override
     public void add(Tuple t) {
         String key = t.getTerm();
@@ -96,12 +131,24 @@ public class RWayTrie implements Trie {
         }
     }
 
+    /**
+     * Checks if Trie contains {@code word}.
+     * @param word actual word to check
+     * @return true,  if yes
+     *         false, otherwise
+     */
     @Override
     public boolean contains(String word) {
         Node node = get(word);
         return node != null && !node.isEmpty();
     }
 
+    /**
+     * Deletes word from Trie.
+     * @param word actual word to delete
+     * @return true,  if success
+     *         false, otherwise
+     */
     @Override
     public boolean delete(String word) {
         if (!contains(word)) {
@@ -113,11 +160,21 @@ public class RWayTrie implements Trie {
         return true;
     }
 
+    /**
+     * Gets <b>all</b> words from Trie.
+     * @return instance of Iterable class with desired words
+     * @see Iterable
+     */
     @Override
     public Iterable<String> words() {
         return wordsWithPrefix("");
     }
 
+    /**
+     * Gets <b>only</b> words that match prefix {@code pref}.
+     * @param pref actual prefix to match
+     * @return instance of Iterable class with desired words
+     */
     @Override
     public Iterable<String> wordsWithPrefix(String pref) {
         StringArray queue = new StringArray();
@@ -136,6 +193,7 @@ public class RWayTrie implements Trie {
                 }
             }
         }
+        // Filter words from queue
         StringArray words = new StringArray();
         for (String nodeString : queue) {
             if (!get(nodeString).isEmpty()) {
@@ -145,11 +203,20 @@ public class RWayTrie implements Trie {
         return words;
     }
 
+    /**
+     * Gets amount of Trie.
+     * @return count of words in Trie
+     */
     @Override
     public int size() {
         return size;
     }
 
+    /**
+     * Additional method to find Node in Trie with {@code key}.
+     * @param key string to match
+     * @return desired Node of Trie
+     */
     private Node get(String key) {
         Node cur = root;
         for (char c : key.toCharArray()) {
@@ -161,6 +228,12 @@ public class RWayTrie implements Trie {
         return cur;
     }
 
+    /**
+     * Additional method to clear Trie from redundant nodes.
+     * It's recursively try to delete Node that has no links and contains
+     * no information inside.
+     * @param word string to start from
+     */
     private void clear(String word) {
         if (word.length() > 0 && get(word).isRedundant()) {
             String subWord = word.substring(0, word.length() - 1);
@@ -169,10 +242,20 @@ public class RWayTrie implements Trie {
         }
     }
 
+    /**
+     * Gets root node of Trie.
+     * Needed for testing.
+     * @return root of Trie
+     */
     Node getRoot() {
         return root;
     }
 
+    /**
+     * Setter for size member.
+     * Needed for testing.
+     * @param newSize value to set
+     */
     void setSize(int newSize) {
         this.size = newSize;
     }
