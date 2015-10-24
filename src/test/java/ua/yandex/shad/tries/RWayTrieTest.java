@@ -166,6 +166,16 @@ public class RWayTrieTest {
 
         assertNotNull(get("oneapple"));
     }
+
+    @Test
+    public void testDelete_deleteAllNodes_rootShouldNotBeDeleted() {
+        trie.delete("o");
+        trie.delete("on");
+        trie.delete("one");
+        trie.delete("oneapple");
+
+        assertNotNull(root);
+    }
     //</editor-fold>
 
     //<editor-fold desc="Tests for words()">
