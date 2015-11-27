@@ -27,6 +27,8 @@ package ua.yandex.shad.tries;
 import ua.yandex.shad.collections.StringArray;
 import ua.yandex.shad.collections.Tuple;
 
+import java.util.Iterator;
+
 public class RWayTrie implements Trie {
 
     /**
@@ -97,7 +99,7 @@ public class RWayTrie implements Trie {
      * @param c character to convert
      * @return desired index
      */
-    public static int toIndex(char c) {
+    private static int toIndex(char c) {
         return c - FIRST_CHAR;
     }
 
@@ -106,7 +108,7 @@ public class RWayTrie implements Trie {
      * @param i actual index in array
      * @return desired character
      */
-    public static char toChar(int i) {
+    private static char toChar(int i) {
         return (char) (FIRST_CHAR + i);
     }
 
@@ -177,30 +179,72 @@ public class RWayTrie implements Trie {
      */
     @Override
     public Iterable<String> wordsWithPrefix(String pref) {
-        StringArray queue = new StringArray();
-        Node prefRoot = get(pref);
-        if (prefRoot == null) {
-            return queue;
+        return new WordsWithPrefixIterable(pref);
+    }
+
+    private class WordsWithPrefixIterable implements Iterable<String> {
+        private String pref;
+
+        public WordsWithPrefixIterable(String pref) {
+            this.pref = pref;
         }
-        queue.add(pref);
-        for (String parentString : queue) {
-            Node parent = get(parentString);
-            for (int i = 0; i < R; ++i) {
-                Node child = parent.getNext(toChar(i));
-                if (child != null) {
-                    String childString = parentString + toChar(i);
-                    queue.add(childString);
+
+        @Override
+        public Iterator<String> iterator() {
+            return new WordsWithPrefixIterator(pref);
+        }
+
+        private class WordsWithPrefixIterator implements Iterator<String> {
+            private String next;
+            private Iterator<String> queueIterator;
+            private StringArray queue = new StringArray();
+
+            private void updateNext() {
+                next = null;
+                while (queueIterator.hasNext()) {
+                    next = queueIterator.next();
+                    enqueuePrefix(next);
+                    if (!get(next).isEmpty()) {
+                        break;
+                    }
+                }
+                if (next != null && get(next).isEmpty()) {
+                    next = null;
                 }
             }
-        }
-        // Filter words from queue
-        StringArray words = new StringArray();
-        for (String nodeString : queue) {
-            if (!get(nodeString).isEmpty()) {
-                words.add(nodeString);
+
+            private void enqueuePrefix(String pref) {
+                Node parent = get(pref);
+                for (int i = 0; i < R; ++i) {
+                    Node child = parent.getNext(toChar(i));
+                    if (child != null) {
+                        String childString = pref + toChar(i);
+                        queue.add(childString);
+                    }
+                }
+            }
+
+            public WordsWithPrefixIterator(String pref) {
+                Node prefRoot = get(pref);
+                if (prefRoot != null) {
+                    queueIterator = queue.iterator();
+                    queue.add(pref);
+                    updateNext();
+                }
+            }
+
+            @Override
+            public boolean hasNext() {
+                return next != null;
+            }
+
+            @Override
+            public String next() {
+                String current = next;
+                updateNext();
+                return current;
             }
         }
-        return words;
     }
 
     /**
