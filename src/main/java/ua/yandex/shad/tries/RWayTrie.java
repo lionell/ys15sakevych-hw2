@@ -222,12 +222,12 @@ public class RWayTrie implements Trie {
                 }
             }
 
-            private void enqueuePrefix(String pref) {
-                Node parent = get(pref);
+            private void enqueuePrefix(String prefix) {
+                Node parent = get(prefix);
                 for (int i = 0; i < R; ++i) {
                     Node child = parent.getNext(toChar(i));
                     if (child != null) {
-                        String childString = pref + toChar(i);
+                        String childString = prefix + toChar(i);
                         queue.add(childString);
                     }
                 }
