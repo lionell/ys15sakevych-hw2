@@ -210,15 +210,14 @@ public class RWayTrie implements Trie {
 
             private void updateNext() {
                 next = null;
+                String newNext;
                 while (queueIterator.hasNext()) {
-                    next = queueIterator.next();
-                    enqueuePrefix(next);
-                    if (!get(next).isEmpty()) {
+                    newNext = queueIterator.next();
+                    enqueuePrefix(newNext);
+                    if (!get(newNext).isEmpty()) {
+                        next = newNext;
                         break;
                     }
-                }
-                if (next != null && get(next).isEmpty()) {
-                    next = null;
                 }
             }
 
