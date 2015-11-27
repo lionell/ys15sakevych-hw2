@@ -191,13 +191,22 @@ public class RWayTrie implements Trie {
 
         @Override
         public Iterator<String> iterator() {
-            return new WordsWithPrefixIterator(pref);
+            return new WordsWithPrefixIterator();
         }
 
         private class WordsWithPrefixIterator implements Iterator<String> {
             private String next;
             private Iterator<String> queueIterator;
             private StringArray queue = new StringArray();
+
+            public WordsWithPrefixIterator() {
+                Node prefRoot = get(pref);
+                if (prefRoot != null) {
+                    queueIterator = queue.iterator();
+                    queue.add(pref);
+                    updateNext();
+                }
+            }
 
             private void updateNext() {
                 next = null;
@@ -221,15 +230,6 @@ public class RWayTrie implements Trie {
                         String childString = pref + toChar(i);
                         queue.add(childString);
                     }
-                }
-            }
-
-            public WordsWithPrefixIterator(String pref) {
-                Node prefRoot = get(pref);
-                if (prefRoot != null) {
-                    queueIterator = queue.iterator();
-                    queue.add(pref);
-                    updateNext();
                 }
             }
 
